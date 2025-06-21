@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+</head>
+<body>
+    <div id="loading-screen">Loading...</div>
+    
+    <script>
+        console.log('Script starting...');
+        
+        // Test if the loading screen exists
+        const loadingScreen = document.getElementById('loading-screen');
+        console.log('Loading screen found:', loadingScreen);
+        
+        // Hide loading screen after 2 seconds
+        setTimeout(() => {
+            console.log('Hiding loading screen...');
+            if (loadingScreen) {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    console.log('Loading screen hidden');
+                }, 500);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

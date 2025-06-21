@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNN Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .step-btn { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .step-btn.active { background: #0066FF; color: white; }
+        .step-panel { display: none; padding: 20px; border: 1px solid #ccc; margin: 10px 0; }
+        .step-panel.active { display: block; }
+        canvas { border: 1px solid #000; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>CNN Basic Test</h1>
+    
+    <div class="step-navigation">
+        <button class="step-btn active" data-step="0">Input Image</button>
+        <button class="step-btn" data-step="1">Convolution</button>
+        <button class="step-btn" data-step="2">Pooling</button>
+        <button class="step-btn" data-step="3">Classification</button>
+    </div>
+
+    <div class="step-content">
+        <div class="step-panel active" data-step="0">
+            <h3>Input Image</h3>
+            <canvas id="input-canvas" width="280" height="280"></canvas>
+        </div>
+
+        <div class="step-panel" data-step="1">
+            <h3>Convolution</h3>
+            <canvas id="conv-canvas" width="400" height="300"></canvas>
+            <button id="play-conv">Play Animation</button>
+        </div>
+
+        <div class="step-panel" data-step="2">
+            <h3>Pooling</h3>
+            <canvas id="pooling-canvas" width="400" height="300"></canvas>
+        </div>
+
+        <div class="step-panel" data-step="3">
+            <h3>Classification</h3>
+            <canvas id="classification-canvas" width="400" height="300"></canvas>
+        </div>
+    </div>
+
+    <script src="script-clean.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "cnn-explorer",
+  "version": "1.0.0",
+  "description": "Interactive CNN Learning Website",
+  "main": "src/js/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "python serve.py",
+    "dev": "python serve.py",
+    "build": "echo 'No build step required for this static site'",
+    "test": "echo 'Tests not implemented yet'",
+    "lint": "echo 'Linting not configured yet'",
+    "format": "echo 'Formatting not configured yet'"
+  },
+  "keywords": [
+    "cnn",
+    "neural-networks",
+    "machine-learning",
+    "education",
+    "interactive",
+    "javascript",
+    "canvas",
+    "visualization"
+  ],
+  "author": "CNN Explorer Team",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
