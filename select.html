@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNN Explorer - Version Selection</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+        .version-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .version-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .btn.secondary {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+        }
+        .features {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 1rem;
+        }
+        .recommended {
+            position: relative;
+        }
+        .recommended::before {
+            content: "✨ RECOMMENDED";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 CNN Explorer</h1>
+        <p class="subtitle">Choose your preferred version to explore Convolutional Neural Networks</p>
+        
+        <div class="version-card recommended">
+            <h2>Modular Version</h2>
+            <p>Modern ES6 modules with enhanced animations and better structure</p>
+            <a href="index-new.html" class="btn">Launch Modular Version</a>
+            <div class="features">
+                ✅ Restored THREE.js Animation<br>
+                ✅ Modular Architecture<br>
+                ✅ Enhanced Performance<br>
+                ✅ Better Error Handling
+            </div>
+        </div>
+
+        <div class="version-card">
+            <h2>Original Version</h2>
+            <p>Classic monolithic implementation (stable fallback)</p>
+            <a href="index-original.html" class="btn secondary">Launch Original Version</a>
+            <div class="features">
+                ✅ Proven Stability<br>
+                ✅ Original Design<br>
+                ✅ Single File Architecture
+            </div>
+        </div>
+
+        <p style="margin-top: 2rem; opacity: 0.7;">
+            <small>
+                📚 This is an educational project demonstrating CNN concepts through interactive visualizations.<br>
+                🔗 <a href="https://github.com/ArielSoothy/CNN-Explorer" style="color: #fff;">View on GitHub</a>
+            </small>
+        </p>
+    </div>
+
+    <script>
+        // Auto-redirect to modular version after 10 seconds unless user interacts
+        let redirectTimer = setTimeout(() => {
+            window.location.href = 'index-new.html';
+        }, 10000);
+
+        // Cancel auto-redirect if user hovers over any card
+        document.querySelectorAll('.version-card, .btn').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                clearTimeout(redirectTimer);
+            });
+        });
+    </script>
+</body>
+</html>
