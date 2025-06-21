@@ -1,13 +1,19 @@
-# CNN Interactive Educational Website
+# CNN Explorer 🧠
 
-A professional, interactive educational website that visualizes and explains Convolutional Neural Networks (CNNs) concepts. This website is designed to make CNN concepts accessible to anyone, regardless of their machine learning background.
+An interactive educational website that teaches Convolutional Neural Networks (CNNs) through beautiful visualizations and hands-on demos.
 
-## 🚀 Features
+## 🌟 Features
 
-### 📚 Educational Content
-- **What is CNN?** - Simple explanations with real-world analogies
-- **Step-by-step breakdown** - Interactive visualization of CNN operations
-- **Progressive learning** - From basic concepts to advanced understanding
+- **3D CNN Animation**: Beautiful THREE.js landing page with rotating neural network layers
+- **Interactive Drawing Canvas**: Draw digits and see CNN predictions in real-time
+- **Step-by-Step Visualization**: Watch how CNNs process data through each layer
+- **Responsive Design**: Works perfectly on desktop and mobile devices
+- **Educational Content**: Learn about convolution, pooling, and classification
+- **Jupyter Integration**: Includes complete MNIST CNN notebook
+
+## 🚀 Live Demo
+
+Visit the live website: [CNN Explorer](https://arielsoothy.github.io/CNN-Explorer/)
 - **Real-world applications** - Practical examples of CNN usage
 
 ### 🎮 Interactive Components
