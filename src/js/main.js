@@ -246,98 +246,6 @@ class CNNExplorerApp {
     }
 }
 
-// 3D Animation Class (optional, separated for modularity)
-class CNNAnimation {
-    constructor() {
-        this.scene = null;
-        this.camera = null;
-        this.renderer = null;
-        this.container = null;
-        this.isInitialized = false;
-    }
-
-    async init() {
-        if (this.isInitialized || !window.THREE) {
-            return; // Skip if Three.js is not loaded or already initialized
-        }
-
-        try {
-            this.container = Utils.safeQuerySelector('#cnn-animation-container');
-            if (!this.container) {
-                console.warn('3D animation container not found');
-                return;
-            }
-
-            this.setupThreeJS();
-            this.createScene();
-            this.startAnimation();
-            
-            this.isInitialized = true;
-            console.log('3D Animation initialized successfully');
-            
-        } catch (error) {
-            ErrorHandler.handle(error, 'CNNAnimation.init');
-        }
-    }
-
-    setupThreeJS() {
-        // Create scene
-        this.scene = new THREE.Scene();
-        
-        // Create camera
-        this.camera = new THREE.PerspectiveCamera(
-            75,
-            this.container.clientWidth / this.container.clientHeight,
-            0.1,
-            1000
-        );
-        
-        // Create renderer
-        this.renderer = new THREE.WebGLRenderer({ 
-            alpha: true,
-            antialias: true 
-        });
-        this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-        this.renderer.setClearColor(0x000000, 0);
-        
-        // Add to container
-        this.container.appendChild(this.renderer.domElement);
-    }
-
-    createScene() {
-        // Create a simple neural network visualization
-        const geometry = new THREE.SphereGeometry(0.1, 16, 16);
-        const material = new THREE.MeshBasicMaterial({ color: 0x0066ff });
-        
-        // Create nodes
-        for (let layer = 0; layer < 3; layer++) {
-            const nodeCount = layer === 1 ? 4 : 3;
-            for (let node = 0; node < nodeCount; node++) {
-                const sphere = new THREE.Mesh(geometry, material);
-                sphere.position.x = layer * 2 - 2;
-                sphere.position.y = (node - nodeCount/2) * 0.5;
-                sphere.position.z = 0;
-                this.scene.add(sphere);
-            }
-        }
-        
-        // Position camera
-        this.camera.position.z = 5;
-    }
-
-    startAnimation() {
-        const animate = () => {
-            requestAnimationFrame(animate);
-            
-            // Rotate the scene slightly
-            this.scene.rotation.y += 0.005;
-            
-            this.renderer.render(this.scene, this.camera);
-        };
-        
-        animate();
-    }
-}
 
 // Initialize the application
 const app = new CNNExplorerApp();
@@ -346,13 +254,7 @@ const app = new CNNExplorerApp();
 document.addEventListener('DOMContentLoaded', async () => {
     await app.init();
     
-    // Optionally initialize 3D animation
-    try {
-        const animation = new CNNAnimation();
-        await animation.init();
-    } catch (error) {
-        console.log('3D animation not available:', error.message);
-    }
+    // 3D animation is initialized within the app
 });
 
 // Export for potential external use
