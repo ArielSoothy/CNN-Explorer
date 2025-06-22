@@ -7,7 +7,7 @@
   "scripts": {
     "start": "python serve.py",
     "dev": "python serve.py",
-    "build": "echo 'No build step required for this static site'",
+    "build": "echo 'Static site - no build step required'",
     "test": "echo 'Tests not implemented yet'",
     "lint": "echo 'Linting not configured yet'",
     "format": "echo 'Formatting not configured yet'"
