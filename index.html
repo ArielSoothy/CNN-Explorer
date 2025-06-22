@@ -396,6 +396,21 @@ print(f"Test accuracy: {test_acc}")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     
+    <!-- Fallback script to ensure loading screen is always hidden -->
+    <script>
+        // Fallback to hide loading screen if main app fails
+        setTimeout(() => {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen && loadingScreen.style.display !== 'none') {
+                console.warn('Fallback: Hiding loading screen due to timeout');
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }
+        }, 8000); // 8 second fallback
+    </script>
+    
     <!-- Local JS Modules -->
     <script type="module" src="./src/js/main.js"></script>
 </body>

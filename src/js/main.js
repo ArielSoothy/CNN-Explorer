@@ -20,6 +20,23 @@ class CNNExplorerApp {
             return;
         }
 
+        // Set up a fallback timeout to hide loading screen
+        const fallbackTimeout = setTimeout(async () => {
+            console.warn('App initialization timeout - hiding loading screen as fallback');
+            if (this.components.loadingScreen) {
+                await this.components.loadingScreen.hide();
+            } else {
+                // Direct fallback if loading screen component isn't available
+                const loadingElement = document.getElementById('loading-screen');
+                if (loadingElement) {
+                    loadingElement.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingElement.style.display = 'none';
+                    }, 500);
+                }
+            }
+        }, 5000); // 5 second timeout
+
         try {
             console.log('Initializing CNN Explorer App...');
             
@@ -40,6 +57,9 @@ class CNNExplorerApp {
             // Setup global event handlers
             this.setupGlobalHandlers();
 
+            // Clear the fallback timeout since we're successful
+            clearTimeout(fallbackTimeout);
+
             // Hide loading screen after initialization
             setTimeout(async () => {
                 await this.components.loadingScreen.hide();
@@ -49,12 +69,25 @@ class CNNExplorerApp {
             console.log('CNN Explorer App initialized successfully');
 
         } catch (error) {
+            console.error('Critical error during app initialization:', error);
             ErrorHandler.handle(error, 'CNNExplorerApp.init');
+            
+            // Clear the fallback timeout
+            clearTimeout(fallbackTimeout);
             
             // Ensure loading screen is hidden even if there's an error
             setTimeout(async () => {
                 if (this.components.loadingScreen) {
                     await this.components.loadingScreen.hide();
+                } else {
+                    // Direct fallback
+                    const loadingElement = document.getElementById('loading-screen');
+                    if (loadingElement) {
+                        loadingElement.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingElement.style.display = 'none';
+                        }, 500);
+                    }
                 }
             }, CONFIG.LOADING_DURATION);
         }
