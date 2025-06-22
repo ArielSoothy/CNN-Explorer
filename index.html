@@ -142,26 +142,74 @@
 
                     <!-- Step 1: Convolution -->
                     <div class="step-panel" data-step="1">
-                        <div class="step-content-wrapper">
-                            <div class="step-visual">
-                                <div class="conv-animation-container">
-                                    <canvas id="conv-canvas" width="450" height="350"></canvas>
-                                </div>
-                            </div>
-                            <div class="step-explanation">
+                        <!-- New Full-Width Convolution Layout -->
+                        <div class="convolution-section">
+                            <div class="section-header">
                                 <h3>2. Convolution: Finding Features</h3>
-                                <p>
-                                    A small <strong>filter</strong> (or <code>kernel</code>) slides over the image. It's a tiny grid of numbers trained to recognize a specific pattern, like an edge or a curve.
+                                <p class="section-description">
+                                    A small <strong>filter</strong> (or <code>kernel</code>) slides over the image. It's a tiny grid of numbers trained to recognize a specific pattern, like an edge or a curve. The output is a <strong>feature map</strong>, which highlights where the feature was found.
                                 </p>
-                                <p>The output is a <strong>feature map</strong>, which highlights where the feature was found.</p>
-                                <div class="conv-controls">
-                                    <button id="play-conv" class="btn btn-primary">
+                            </div>
+                            
+                            <!-- Main Visualization Area - Full Width -->
+                            <div class="convolution-visualization">
+                                <canvas id="conv-canvas" width="1200" height="800"></canvas>
+                            </div>
+                            
+                            <!-- Controls Section -->
+                            <div class="convolution-controls">
+                                <div class="control-group">
+                                    <button id="play-conv" class="btn btn-primary btn-large">
                                         <i class="fas fa-play"></i> Play Animation
                                     </button>
-                                    <button id="reset-conv" class="btn btn-secondary">
+                                    <button id="reset-conv" class="btn btn-secondary btn-large">
                                         <i class="fas fa-redo"></i> Reset
                                     </button>
+                                    <button id="complete-conv" class="btn btn-accent btn-large">
+                                        <i class="fas fa-forward"></i> Complete Map
+                                    </button>
                                 </div>
+                                
+                                <div class="filter-selector-section">
+                                    <label for="filter-select">Choose Filter Type:</label>
+                                    <select id="filter-select" class="filter-dropdown">
+                                        <option value="0">Vertical Edge Detector</option>
+                                        <option value="1">Horizontal Edge Detector</option>
+                                        <option value="2">Diagonal Edge ↘</option>
+                                        <option value="3">Diagonal Edge ↙</option>
+                                        <option value="4">Corner Detector</option>
+                                        <option value="5">Line Detector (Horizontal)</option>
+                                        <option value="6">Line Detector (Vertical)</option>
+                                        <option value="7">Laplacian (Edge Enhancement)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Feature Description -->
+                            <div class="feature-explanation">
+                                <div class="explanation-card">
+                                    <h4>💡 What's Happening?</h4>
+                                    <ul>
+                                        <li><strong>Filter Movement:</strong> The 3×3 filter slides across every position of the input image</li>
+                                        <li><strong>Calculation:</strong> At each position, we multiply corresponding pixels and sum the results</li>
+                                        <li><strong>ReLU Activation:</strong> Negative values are set to zero to highlight positive features</li>
+                                        <li><strong>Feature Map:</strong> The result shows where the filter pattern was detected</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Multi-Filter Visualization -->
+                        <div class="multi-filter-section">
+                            <h4>32 Feature Maps in a Single Convolutional Layer</h4>
+                            <p class="filter-explanation">
+                                A real CNN uses multiple filters simultaneously. Each filter detects different patterns: edges, corners, textures, and more complex features.
+                            </p>
+                            <div class="filter-grid" id="filter-grid">
+                                <!-- Filter thumbnails will be generated here by JavaScript -->
+                            </div>
+                            <div class="filter-info">
+                                <p><strong>💡 Tip:</strong> Click on any feature map to select that filter and see it in action above.</p>
                             </div>
                         </div>
                     </div>
@@ -170,7 +218,7 @@
                     <div class="step-panel" data-step="2">
                         <div class="step-content-wrapper">
                             <div class="step-visual">
-                                <canvas id="pooling-canvas" width="450" height="350"></canvas>
+                                <canvas id="pooling-canvas" width="800" height="600"></canvas>
                             </div>
                             <div class="step-explanation">
                                 <h3>3. Pooling: Down-sampling</h3>
@@ -186,7 +234,7 @@
                     <div class="step-panel" data-step="3">
                         <div class="step-content-wrapper">
                             <div class="step-visual">
-                                <canvas id="classification-canvas" width="450" height="350"></canvas>
+                                <canvas id="classification-canvas" width="800" height="600"></canvas>
                             </div>
                             <div class="step-explanation">
                                 <h3>4. Classification: The Final Guess</h3>
