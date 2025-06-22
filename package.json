@@ -5,8 +5,8 @@
   "main": "src/js/main.js",
   "type": "module",
   "scripts": {
-    "start": "python serve.py",
-    "dev": "python serve.py",
+    "start": "python3 serve.py",
+    "dev": "python3 serve.py",
     "build": "echo 'Static site - no build step required'",
     "test": "echo 'Tests not implemented yet'",
     "lint": "echo 'Linting not configured yet'",

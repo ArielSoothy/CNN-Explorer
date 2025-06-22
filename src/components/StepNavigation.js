@@ -49,7 +49,7 @@ export class StepNavigation {
 
             // Update panel visibility
             stepPanels.forEach(panel => panel.classList.remove('active'));
-            const targetPanel = document.querySelector(`[data-step="${stepIndex}"]`);
+            const targetPanel = document.querySelector(`.step-panel[data-step="${stepIndex}"]`);
             if (targetPanel) {
                 targetPanel.classList.add('active');
             }
