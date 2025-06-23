@@ -2,12 +2,31 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all components
     initializeNavigation();
+    initializeMachineLearning();
     initializeCanvas();
     initializeAnimations();
     initializeMobileMenu();
     initializeInteractiveSteps();
     initializeScrollToTop();
 });
+
+// Initialize the ML predictor
+function initializeMachineLearning() {
+    // Create global ML predictor instance
+    if (typeof window.MNISTPredictor !== 'undefined') {
+        window.mnistPredictor = new window.MNISTPredictor();
+        console.log('🤖 ML Predictor initialized successfully');
+        
+        // Update model status in UI
+        const modelStatus = document.querySelector('.model-status');
+        if (modelStatus) {
+            modelStatus.className = 'model-status ready';
+            modelStatus.textContent = '✅ Intelligent Demo Mode Active';
+        }
+    } else {
+        console.error('❌ MNISTPredictor class not found');
+    }
+}
 
 // Navigation functionality
 function initializeNavigation() {
@@ -55,6 +74,10 @@ function initializeCanvas() {
     let lastX = 0;
     let lastY = 0;
 
+    // Initialize canvas with white background
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
     // Set canvas properties
     ctx.lineWidth = 15;
     ctx.lineCap = 'round';
@@ -126,8 +149,13 @@ function initializeCanvas() {
     const clearButton = document.getElementById('clearCanvas');
     if (clearButton) {
         clearButton.addEventListener('click', function() {
+            // Clear and restore white background
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
             clearPredictionResults();
+            clearDebugCanvases();
         });
     }
 
@@ -145,6 +173,18 @@ async function performRealPrediction(canvas) {
     const resultsContainer = document.getElementById('predictionResults');
     if (!resultsContainer) return;
 
+    // Check if ML predictor is initialized
+    if (!window.mnistPredictor) {
+        console.error('❌ ML Predictor not initialized');
+        resultsContainer.innerHTML = `
+            <div class="prediction-result">
+                <h4>❌ ML System Error</h4>
+                <p>Please refresh the page and try again</p>
+            </div>
+        `;
+        return;
+    }
+
     // Show loading state
     resultsContainer.innerHTML = `
         <div class="prediction-loading">
@@ -158,21 +198,39 @@ async function performRealPrediction(canvas) {
 
     try {
         // Use the global MNIST predictor
-        const predictions = await window.mnistPredictor.predict(canvas);
+        const rawPredictions = await window.mnistPredictor.predict(canvas);
+        
+        // Convert raw predictions array to format expected by displayPredictions
+        const formattedPredictions = rawPredictions
+            .map((confidence, digit) => ({ digit, confidence }))
+            .sort((a, b) => b.confidence - a.confidence) // Sort by confidence descending
+            .slice(0, 5); // Top 5 predictions
+        
+        // Validate if prediction is within supported range (1-4)
+        const topPrediction = formattedPredictions[0];
+        const isValidRange = topPrediction.digit >= 1 && topPrediction.digit <= 4;
+        const hasGoodConfidence = topPrediction.confidence > 0.4; // At least 40% confidence
         
         // Show results after a brief delay for better UX
         setTimeout(() => {
-            displayPredictions(predictions, true);
+            if (isValidRange && hasGoodConfidence) {
+                displayPredictions(formattedPredictions, true);
+            } else {
+                showOutOfRangeMessage(topPrediction);
+            }
         }, 500);
         
     } catch (error) {
         console.error('Prediction failed:', error);
         
-        // Fallback to demo predictions if ML fails
-        console.log('🔄 Falling back to demo predictions...');
+        // Show error message
         setTimeout(() => {
-            const demoPredictions = window.mnistPredictor.generateDemoPredictions();
-            displayPredictions(demoPredictions, false);
+            resultsContainer.innerHTML = `
+                <div class="prediction-result">
+                    <h4>⚠️ Processing Error</h4>
+                    <p>Unable to analyze drawing. Please try drawing a clearer digit.</p>
+                </div>
+            `;
         }, 1000);
     }
 }
@@ -340,15 +398,65 @@ function displayPredictions(predictions, isRealAI = false) {
     resultsContainer.innerHTML = html;
 }
 
+function showOutOfRangeMessage(prediction) {
+    const resultsContainer = document.getElementById('predictionResults');
+    if (!resultsContainer) return;
+    
+    const predictedDigit = prediction.digit;
+    const confidence = Math.round(prediction.confidence * 100);
+    
+    let message = "";
+    let encouragement = "";
+    
+    if (predictedDigit === 0) {
+        message = "I see you drew a 0! 🙂";
+        encouragement = "This specialized model focuses on digits 1-4 for the best accuracy.";
+    } else if (predictedDigit >= 5) {
+        message = `Nice ${predictedDigit}! 🎉`;
+        encouragement = "This model was trained specifically on digits 1-4. Try drawing one of those!";
+    } else {
+        // Low confidence case
+        message = "Hmm, I'm not quite sure what that is... 🤔";
+        encouragement = "Try drawing a clearer digit from 1-4. Make it big and bold!";
+    }
+    
+    resultsContainer.innerHTML = `
+        <div class="out-of-range-message">
+            <h4>${message}</h4>
+            <p>${encouragement}</p>
+        </div>
+        <div class="prediction-result">
+            <h4>🤖 Model Limitation</h4>
+            <p>This AI model specializes in recognizing digits <strong>1, 2, 3, and 4</strong> with high accuracy.</p>
+        </div>
+    `;
+}
+
 function clearPredictionResults() {
     const resultsContainer = document.getElementById('predictionResults');
     if (resultsContainer) {
         resultsContainer.innerHTML = `
             <div class="prediction-placeholder">
                 <i class="fas fa-arrow-left"></i>
-                <p>Draw a digit and click "Predict" to see the magic!</p>
+                <p>Draw a digit (1-4) and click "Predict" to see the magic!</p>
             </div>
         `;
+    }
+}
+
+function clearDebugCanvases() {
+    // Clear the debug original canvas
+    const debugOriginal = document.getElementById('debugOriginal');
+    if (debugOriginal) {
+        const ctx = debugOriginal.getContext('2d');
+        ctx.clearRect(0, 0, debugOriginal.width, debugOriginal.height);
+    }
+    
+    // Clear the debug processed canvas (AI input)
+    const debugProcessed = document.getElementById('debugProcessed');
+    if (debugProcessed) {
+        const ctx = debugProcessed.getContext('2d');
+        ctx.clearRect(0, 0, debugProcessed.width, debugProcessed.height);
     }
 }
 

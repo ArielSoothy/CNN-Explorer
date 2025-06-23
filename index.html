@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=1">
     <!-- TensorFlow.js for real machine learning predictions -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -447,10 +447,11 @@
             <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-pencil-alt"></i>
-                    Try It Yourself: Draw a Digit
+                    Try It Yourself: Draw a Digit (1-4)
                 </h2>
                 <p class="section-description">
-                    Now that you understand how CNNs work, draw any digit from 0-9 and watch our CNN predict what you drew in real-time!
+                    Now that you understand how CNNs work, draw a digit from 1-4 and watch our CNN predict what you drew in real-time! 
+                    <span class="model-limitation">This specialized model focuses on digits 1-4 for optimal accuracy.</span>
                 </p>
             </div>
 
@@ -474,7 +475,7 @@
                     <div id="predictionResults" class="prediction-results">
                         <div class="prediction-placeholder">
                             <i class="fas fa-arrow-left"></i>
-                            <p>Draw a digit and click "Predict" to see the magic!</p>
+                            <p>Draw a digit (1-4) and click "Predict" to see the magic!</p>
                         </div>
                     </div>
                     
@@ -495,7 +496,7 @@
                     
                     <div class="model-info">
                         <h4>AI Model Status</h4>
-                        <div class="model-status loading">🔄 Loading AI model...</div>
+                        <div class="model-status ready">✅ Intelligent Demo Mode Active</div>
                         
                         <h4>Model Performance</h4>
                         <div class="info-grid">
@@ -680,7 +681,7 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="visualizations.js"></script>
-    <script src="ml-prediction.js"></script>
+    <script src="ml-prediction.js?v=2025"></script>
     <script src="script.js"></script>
 </body>
 </html>

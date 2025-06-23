@@ -357,6 +357,18 @@ p {
     line-height: 1.7;
 }
 
+.model-limitation {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 0.5rem;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
 /* Overview Grid */
 .overview-grid {
     display: grid;
@@ -1806,4 +1818,50 @@ html {
 
 .scroll-top-btn:active {
     transform: translateY(-1px);
+}
+
+/* Model Status Styles */
+.model-status.loading {
+    color: var(--warning-color);
+    font-weight: 500;
+}
+
+.model-status.ready {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+/* Out-of-range message styling */
+.out-of-range-message {
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-lg);
+    margin: 1rem 0;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    animation: fadeInBounce 0.5s ease-out;
+}
+
+.out-of-range-message h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: var(--font-size-lg);
+    color: white;
+}
+
+.out-of-range-message p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+}
+
+@keyframes fadeInBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 } 
