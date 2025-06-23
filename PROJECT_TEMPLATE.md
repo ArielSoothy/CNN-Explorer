@@ -1,64 +1,31 @@
-Create a professional, interactive educational website that visualizes and explains [ASSIGNMENT TOPIC] concepts. The website should follow these specifications:
+Create an interactive educational website for a CNN MNIST classifier with these sections:
 
 STRUCTURE:
-1. Hero section with animated title and brief description
-2. Interactive concept visualizer/playground 
-3. Jupyter notebook integration showing the actual code
-4. Step-by-step visual explanations with animations
-5. Key takeaways section
+1. Hero with animated title
+2. Interactive CNN visualization showing convolution/pooling layers
+3. Live demo where users can draw digits and see predictions
+4. Embedded Jupyter notebook
+5. Key concepts cards
 
-DESIGN REQUIREMENTS:
-- Color scheme: Modern blue gradient (#0066FF to #004DCC) with white/light backgrounds
-- Typography: Clean sans-serif (Inter or similar) with clear hierarchy
-- Responsive design that works on all devices
-- Smooth animations and transitions (using CSS animations or GSAP)
-- Professional appearance matching top tech company standards
+STYLE:
+- Modern blue gradient (#0066FF to #004DCC)
+- Smooth animations
+- Mobile responsive
 
-TECHNICAL FEATURES:
-1. Interactive Visualizer:
-   - Real-time parameter adjustment sliders/controls
-   - Animated process visualization (e.g., for CNN: show convolution, pooling, layers)
-   - Live output updates based on user input
-   - Reset button to return to defaults
+IMPLEMENTATION:
+- Use vanilla JS (no frameworks)
+- Include the notebook using notebook.js
+- Add play/pause controls for animations
+- Create a canvas for digit drawing
 
-2. Code Integration:
-   - Embedded Jupyter notebook viewer (use notebook.js or similar)
-   - Syntax highlighting with Prism.js
-   - Collapsible code sections
-   - "Run" buttons that trigger visualizations
+Focus on making complex concepts simple so that anybody can understand proffesional or clueless through visual metaphors.
 
-3. Educational Elements:
-   - Progressive disclosure (start simple, add complexity)
-   - Tooltips explaining technical terms on hover
-   - Side-by-side comparison of input/output
-   - Mathematical formulas rendered with KaTeX
 
-4. Animations:
-   - Smooth transitions between states
-   - Step-through capability for complex processes
-   - Play/pause controls for animations
-   - Speed adjustment slider
 
-SPECIFIC SECTIONS TO INCLUDE:
+Also use the /Users/arielsoothy/PycharmProjects/Ariel/MetaOr/CNN/MNIST_with_CNN.ipynb for reference, 
+and /Users/arielsoothy/PycharmProjects/Ariel/MetaOr/CNN/notebook-interactive.html as an example of how the notebook should look. the ineractivenotbok you make should be on the same page at the bottom, this is copied from anpther project, the content should be with the MNIST_with_CNN just we want the same format get me?
 
-1. "What is [CONCEPT]?" - Simple explanation with animated diagram
-2. "How it Works" - Step-by-step breakdown with visualizations
-3. "Interactive Demo" - Hands-on playground
-4. "See the Code" - Notebook integration
-5. "Real-World Applications" - Practical examples
-6. "Key Concepts" - Summary cards with icons
+This hsa a git repo and a githubpages.
 
-IMPLEMENTATION NOTES:
-- Use vanilla JavaScript or lightweight libraries (no heavy frameworks)
-- Optimize for fast loading (lazy load images, minify assets)
-- Include loading states for interactive elements
-- Add keyboard navigation support
-- Ensure accessibility (ARIA labels, contrast ratios)
+use best practice to build website ux/ui and infra and file structure wise, everything.
 
-FILE STRUCTURE:
-index.html - Main page
-style.css - All styling
-script.js - Interactivity and animations
-assets/ - Images, notebooks, data files
-
-Make the complex simple. Use metaphors and analogies. The goal is for someone with no ML background to understand the core concepts after exploring the site.
