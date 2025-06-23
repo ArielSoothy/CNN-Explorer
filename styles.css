@@ -954,6 +954,75 @@ p {
     order: -1; /* This moves it above the visualization */
 }
 
+.explanation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.concept-card {
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.concept-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+}
+
+.concept-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.concept-card i {
+    font-size: var(--font-size-3xl);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    display: block;
+}
+
+.concept-card h4 {
+    color: var(--text-color);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-lg);
+}
+
+.concept-card p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.step-visualization.compact {
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-xl);
+    padding: var(--spacing-xl);
+}
+
+.interactive-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-lg);
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
 .step-explanation h3 {
     color: var(--primary-color);
     margin-bottom: var(--spacing-lg);
@@ -1152,16 +1221,27 @@ p {
 }
 
 .pixel-info {
-    text-align: center;
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
 }
 
-.pixel-info h4 {
-    color: var(--primary-color);
-    margin-bottom: var(--spacing-md);
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
 }
 
-.pixel-info p {
-    margin-bottom: var(--spacing-sm);
+.info-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.info-item span:last-child {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: var(--font-size-base);
 }
 
 #currentPixel {
@@ -1585,6 +1665,26 @@ p {
     .step-explanation {
         padding: var(--spacing-md) var(--spacing-lg);
         margin-bottom: var(--spacing-md);
+    }
+    
+    .explanation-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .interactive-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+    }
+    
+    .pixel-info {
+        justify-content: center;
+        gap: var(--spacing-md);
+    }
+    
+    .step-controls {
+        justify-content: center;
     }
     
     .convolution-container,

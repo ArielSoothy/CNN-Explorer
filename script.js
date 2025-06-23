@@ -17,14 +17,42 @@ function initializeMachineLearning() {
         window.mnistPredictor = new window.MNISTPredictor();
         console.log('🤖 ML Predictor initialized successfully');
         
-        // Update model status in UI
-        const modelStatus = document.querySelector('.model-status');
-        if (modelStatus) {
-            modelStatus.className = 'model-status ready';
-            modelStatus.textContent = '✅ Intelligent Demo Mode Active';
-        }
+        // Monitor model loading status
+        monitorModelStatus();
     } else {
         console.error('❌ MNISTPredictor class not found');
+        updateModelStatusUI('error', '❌ TensorFlow.js not loaded');
+    }
+}
+
+// Monitor the model loading status and update UI
+function monitorModelStatus() {
+    const updateInterval = setInterval(() => {
+        if (!window.mnistPredictor) {
+            clearInterval(updateInterval);
+            return;
+        }
+        
+        const status = window.mnistPredictor.getStatus();
+        
+        if (window.mnistPredictor.modelStatus === 'loading') {
+            updateModelStatusUI('loading', '⏳ Loading TensorFlow.js Model...');
+        } else if (window.mnistPredictor.modelStatus === 'ready') {
+            updateModelStatusUI('loaded', '✅ TensorFlow.js Model Ready');
+            clearInterval(updateInterval); // Stop monitoring once loaded
+        } else if (window.mnistPredictor.modelStatus === 'error') {
+            updateModelStatusUI('error', '❌ Failed to Load Model');
+            clearInterval(updateInterval);
+        }
+    }, 500); // Check every 500ms
+}
+
+// Update model status in UI
+function updateModelStatusUI(statusType, message) {
+    const modelStatus = document.getElementById('modelStatus');
+    if (modelStatus) {
+        modelStatus.className = `model-status ${statusType}`;
+        modelStatus.textContent = message;
     }
 }
 
@@ -211,11 +239,21 @@ async function performRealPrediction(canvas) {
         const isValidRange = topPrediction.digit >= 1 && topPrediction.digit <= 4;
         const hasGoodConfidence = topPrediction.confidence > 0.4; // At least 40% confidence
         
+        // Debug logging
+        console.log('🔍 Prediction Debug:', {
+            topPrediction,
+            isValidRange,
+            hasGoodConfidence,
+            allPredictions: formattedPredictions
+        });
+        
         // Show results after a brief delay for better UX
         setTimeout(() => {
             if (isValidRange && hasGoodConfidence) {
+                console.log('✅ Showing normal prediction');
                 displayPredictions(formattedPredictions, true);
             } else {
+                console.log('⚠️ Showing out-of-range message');
                 showOutOfRangeMessage(topPrediction);
             }
         }, 500);
