@@ -134,15 +134,14 @@ function initializeCanvas() {
     // Predict button
     const predictButton = document.getElementById('predictDigit');
     if (predictButton) {
-        predictButton.addEventListener('click', function() {
-            const imageData = canvas.toDataURL();
-            simulatePrediction(imageData);
+        predictButton.addEventListener('click', async function() {
+            await performRealPrediction(canvas);
         });
     }
 }
 
-// Simulate CNN prediction (since we don't have a real model running)
-function simulatePrediction(imageData) {
+// Perform real CNN prediction using TensorFlow.js
+async function performRealPrediction(canvas) {
     const resultsContainer = document.getElementById('predictionResults');
     if (!resultsContainer) return;
 
@@ -150,18 +149,44 @@ function simulatePrediction(imageData) {
     resultsContainer.innerHTML = `
         <div class="prediction-loading">
             <div class="loading-spinner"></div>
-            <p>CNN is analyzing your drawing...</p>
+            <p>🧠 AI is analyzing your drawing...</p>
         </div>
     `;
 
-    // Add loading spinner styles
-    if (!document.querySelector('#loading-styles')) {
+    // Add loading spinner styles if not already added
+    addPredictionStyles();
+
+    try {
+        // Use the global MNIST predictor
+        const predictions = await window.mnistPredictor.predict(canvas);
+        
+        // Show results after a brief delay for better UX
+        setTimeout(() => {
+            displayPredictions(predictions, true);
+        }, 500);
+        
+    } catch (error) {
+        console.error('Prediction failed:', error);
+        
+        // Fallback to demo predictions if ML fails
+        console.log('🔄 Falling back to demo predictions...');
+        setTimeout(() => {
+            const demoPredictions = window.mnistPredictor.generateDemoPredictions();
+            displayPredictions(demoPredictions, false);
+        }, 1000);
+    }
+}
+
+// Add prediction styles if not already present
+function addPredictionStyles() {
+    if (!document.querySelector('#prediction-styles')) {
         const style = document.createElement('style');
-        style.id = 'loading-styles';
+        style.id = 'prediction-styles';
         style.textContent = `
             .prediction-loading {
                 text-align: center;
                 color: var(--text-secondary);
+                padding: 2rem;
             }
             .loading-spinner {
                 width: 40px;
@@ -184,16 +209,22 @@ function simulatePrediction(imageData) {
                 padding: 0.5rem;
                 border-radius: 0.5rem;
                 background: var(--surface-color);
+                transition: all 0.3s ease;
+            }
+            .prediction-bar:hover {
+                transform: translateX(5px);
             }
             .prediction-bar.top {
                 background: var(--gradient-primary);
                 color: white;
                 font-weight: 600;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             }
             .digit-label {
                 font-size: 1.2rem;
                 font-weight: 600;
                 min-width: 30px;
+                text-align: center;
             }
             .confidence-bar {
                 flex: 1;
@@ -205,61 +236,72 @@ function simulatePrediction(imageData) {
             .confidence-fill {
                 height: 100%;
                 background: var(--gradient-accent);
-                transition: width 0.5s ease;
+                transition: width 0.8s ease;
             }
             .confidence-percent {
                 font-size: 0.9rem;
                 color: var(--text-secondary);
+                font-weight: 500;
+            }
+            .prediction-result {
+                text-align: center;
+                margin-bottom: 1.5rem;
+                padding: 1rem;
+                background: var(--surface-color);
+                border-radius: 0.5rem;
+                border: 2px solid var(--primary-color);
+            }
+            .prediction-result h4 {
+                margin: 0 0 0.5rem 0;
+                color: var(--primary-color);
+                font-size: 1.5rem;
+            }
+            .prediction-result p {
+                margin: 0;
+                font-size: 1.1rem;
+                color: var(--text-secondary);
+            }
+            .ai-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                background: var(--gradient-primary);
+                color: white;
+                padding: 0.25rem 0.75rem;
+                border-radius: 1rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+                margin-left: 0.5rem;
+            }
+            .model-status {
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                margin-bottom: 1rem;
+                font-weight: 500;
+                text-align: center;
+            }
+            .model-status.loading {
+                background: #fef3c7;
+                color: #92400e;
+            }
+            .model-status.loaded {
+                background: #d1fae5;
+                color: #065f46;
+            }
+            .model-status.fallback {
+                background: #dbeafe;
+                color: #1e40af;
+            }
+            .model-status.error {
+                background: #fecaca;
+                color: #991b1b;
             }
         `;
         document.head.appendChild(style);
     }
-
-    // Simulate processing time
-    setTimeout(() => {
-        // Generate random but realistic predictions
-        const predictions = generateRandomPredictions();
-        displayPredictions(predictions);
-    }, 1500);
 }
 
-function generateRandomPredictions() {
-    const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const predictions = [];
-    
-    // Generate a top prediction with high confidence
-    const topDigit = digits[Math.floor(Math.random() * digits.length)];
-    const topConfidence = 0.85 + Math.random() * 0.14; // 85-99%
-    
-    predictions.push({
-        digit: topDigit,
-        confidence: topConfidence
-    });
-    
-    // Generate other predictions with lower confidence
-    const remainingDigits = digits.filter(d => d !== topDigit);
-    const numOtherPredictions = 3 + Math.floor(Math.random() * 3); // 3-5 other predictions
-    
-    for (let i = 0; i < numOtherPredictions; i++) {
-        if (remainingDigits.length === 0) break;
-        
-        const digitIndex = Math.floor(Math.random() * remainingDigits.length);
-        const digit = remainingDigits.splice(digitIndex, 1)[0];
-        const confidence = Math.random() * (0.85 - 0.05) + 0.05; // 5-85%
-        
-        predictions.push({
-            digit: digit,
-            confidence: confidence
-        });
-    }
-    
-    // Sort by confidence
-    predictions.sort((a, b) => b.confidence - a.confidence);
-    
-    return predictions;
-}
-
-function displayPredictions(predictions) {
+function displayPredictions(predictions, isRealAI = false) {
     const resultsContainer = document.getElementById('predictionResults');
     if (!resultsContainer) return;
 
@@ -285,10 +327,11 @@ function displayPredictions(predictions) {
     if (predictions.length > 0) {
         const topPrediction = predictions[0];
         const topPercentage = Math.round(topPrediction.confidence * 100);
+        const aiBadge = isRealAI ? '<span class="ai-badge"><i class="fas fa-robot"></i> Real AI</span>' : '<span class="ai-badge"><i class="fas fa-flask"></i> Demo</span>';
         
         html = `
             <div class="prediction-result">
-                <h4>🎯 Prediction: ${topPrediction.digit}</h4>
+                <h4>🎯 Prediction: ${topPrediction.digit} ${aiBadge}</h4>
                 <p>Confidence: ${topPercentage}%</p>
             </div>
         ` + html;
