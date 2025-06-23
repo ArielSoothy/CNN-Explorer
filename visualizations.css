@@ -1,0 +1,343 @@
+/* Visualization Styles for NLP Project Charts */
+
+/* Pie Chart Styles */
+.pie-chart-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.pie-chart {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #4CAF50 0% 40%,
+        #F44336 40% 80%,
+        #9E9E9E 80% 100%
+    );
+    position: relative;
+}
+
+.pie-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
+
+/* Histogram Styles */
+.histogram-container {
+    display: flex;
+    gap: 3rem;
+    margin: 2rem 0;
+    justify-content: center;
+}
+
+.histogram-section {
+    text-align: center;
+}
+
+.histogram-section h4 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.bars {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    height: 200px;
+    margin-bottom: 1rem;
+}
+
+.bar {
+    width: 40px;
+    min-height: 20px;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.bar::after {
+    content: attr(--value);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+.article-bar {
+    background: linear-gradient(to top, #2196F3, #64B5F6);
+}
+
+.highlight-bar {
+    background: linear-gradient(to top, #FF9800, #FFB74D);
+}
+
+.axis-labels {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.axis-labels span {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+.histogram-analysis {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--card-background);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+/* ROUGE Scores Visualization */
+.rouge-visualization {
+    margin: 2rem 0;
+}
+
+.rouge-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.rouge-group {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.doc-label {
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: right;
+}
+
+.rouge-bar {
+    height: 30px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    color: white;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.rouge-bar:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.rouge1 {
+    background: linear-gradient(to right, #4CAF50, #66BB6A);
+}
+
+.rouge2 {
+    background: linear-gradient(to right, #2196F3, #42A5F5);
+}
+
+.rouge-analysis {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--card-background);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Information Retrieval Performance */
+.ir-performance {
+    margin: 2rem 0;
+}
+
+.performance-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.query-result {
+    display: grid;
+    grid-template-columns: 200px 1fr 150px;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background: var(--card-background);
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+.query-result:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.query-text {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-family: 'Courier New', monospace;
+    background: rgba(33, 150, 243, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.similarity-score {
+    position: relative;
+    height: 25px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.score-bar {
+    height: 100%;
+    background: linear-gradient(to right, #FF5722, #FF9800, #4CAF50);
+    border-radius: 12px;
+    transition: width 0.8s ease;
+}
+
+.score-value {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.relevance-domain {
+    text-align: center;
+    padding: 0.5rem;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.performance-summary {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--card-background);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Confusion Matrix */
+.confusion-matrix {
+    margin: 2rem 0;
+}
+
+.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.matrix-table th,
+.matrix-table td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.matrix-table th {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.matrix-cell {
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.matrix-cell:hover {
+    transform: scale(1.1);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+
+.matrix-cell.has-value {
+    color: #2E7D32;
+}
+
+.matrix-analysis {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--card-background);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pie-chart-container,
+    .histogram-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .query-result {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .rouge-group {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .doc-label {
+        text-align: center;
+    }
+}
+
+/* Animation for chart loading */
+@keyframes chartLoad {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pie-chart-container,
+.histogram-container,
+.rouge-visualization,
+.ir-performance,
+.confusion-matrix {
+    animation: chartLoad 0.6s ease-out;
+}
