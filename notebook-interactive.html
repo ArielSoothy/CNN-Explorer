@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>ArtificialGate - CNN Explorer | Interactive MNIST Analysis</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="visualizations.css">
@@ -13,9 +16,16 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             margin: 0;
             padding: 0;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
             background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
             min-height: 100vh;
+            min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
             color: #333;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .notebook-container {
@@ -348,17 +358,284 @@
             color: #991b1b;
         }
 
+        /* Enhanced Mobile Responsiveness */
         @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            .notebook-container {
+                padding: 10px;
+            }
+
+            .project-header {
+                padding: 15px 10px;
+                margin-bottom: 20px;
+            }
+
+            .project-header h1 {
+                font-size: 1.8em;
+                line-height: 1.2;
+            }
+
+            .project-header p {
+                font-size: 1em;
+                margin: 8px 0;
+            }
+
             .nav-pills {
                 flex-direction: column;
+                margin: 20px 0;
+                gap: 8px;
             }
-            
-            .project-header h1 {
-                font-size: 2em;
+
+            .nav-pill {
+                padding: 15px 20px;
+                text-align: center;
+                font-size: 0.9em;
+            }
+
+            .notebook-cell {
+                margin: 15px 0;
+                border-radius: 10px;
+            }
+
+            .cell-header {
+                padding: 12px 15px;
+                font-size: 0.9em;
+            }
+
+            .cell-header span {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .question-number {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8em;
+                margin-right: 8px;
+                flex-shrink: 0;
+            }
+
+            .cell-content {
+                padding: 15px;
+            }
+
+            .cell-content h3 {
+                font-size: 1.1em;
+                margin-bottom: 10px;
+            }
+
+            .cell-content p {
+                font-size: 0.9em;
+                line-height: 1.5;
+            }
+
+            .code-block {
+                margin: 15px 0;
+                border-radius: 8px;
+            }
+
+            .code-header {
+                padding: 8px 12px;
+                font-size: 0.8em;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .code-language {
+                font-size: 0.7em;
+            }
+
+            .copy-button {
+                font-size: 0.7em;
+                padding: 6px 10px;
+                min-height: 32px;
+            }
+
+            .code-content {
+                padding: 15px 10px;
+                font-size: 0.8em;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .code-content pre {
+                min-width: max-content;
+                white-space: pre;
+            }
+
+            /* Architecture Diagram Mobile Fix */
+            .architecture-diagram {
+                padding: 15px 10px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .architecture-diagram > div {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 10px !important;
+                min-width: 280px;
+            }
+
+            .model-layer {
+                display: block !important;
+                margin: 8px 0 !important;
+                padding: 12px 16px;
+                font-size: 0.8em;
+                text-align: center;
+                min-width: 120px;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+                font-size: 1.2em;
+                margin: 5px 0;
             }
 
             .metric-grid {
                 grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .metric-card {
+                padding: 15px;
+                text-align: center;
+            }
+
+            .metric-card h3 {
+                font-size: 1.5em;
+                margin-bottom: 5px;
+            }
+
+            .metric-card p {
+                font-size: 0.9em;
+            }
+
+            .result-box {
+                padding: 12px;
+                margin: 10px 0;
+                border-radius: 6px;
+            }
+
+            .result-box h4 {
+                font-size: 1em;
+                margin-bottom: 8px;
+            }
+
+            .insight-box {
+                padding: 15px;
+                margin: 10px 0;
+                border-radius: 6px;
+            }
+
+            .insight-box h4 {
+                font-size: 1em;
+                margin-bottom: 8px;
+            }
+
+            .insight-box p {
+                font-size: 0.85em;
+                line-height: 1.4;
+            }
+
+            .chart-container {
+                height: 250px;
+                padding: 15px 10px;
+                margin: 15px 0;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                gap: 8px;
+                margin: 15px 0;
+            }
+
+            .digit-image {
+                height: 80px;
+                font-size: 1.3em;
+                border-radius: 6px;
+            }
+
+            .digit-image small {
+                font-size: 0.6em;
+            }
+
+            /* Better touch targets */
+            .nav-pill, .cell-header, .copy-button {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Prevent horizontal scroll */
+            .code-content, .architecture-diagram {
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        /* Extra small screens (phones in portrait) */
+        @media (max-width: 480px) {
+            .project-header h1 {
+                font-size: 1.5em;
+            }
+
+            .nav-pill {
+                padding: 12px 15px;
+                font-size: 0.85em;
+            }
+
+            .code-content {
+                font-size: 0.75em;
+                padding: 12px 8px;
+            }
+
+            .model-layer {
+                font-size: 0.75em;
+                padding: 10px 12px;
+                min-width: 100px;
+            }
+
+            .metric-card h3 {
+                font-size: 1.3em;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            }
+
+            .digit-image {
+                height: 70px;
+                font-size: 1.1em;
+            }
+        }
+
+        /* Landscape phones */
+        @media (max-width: 896px) and (orientation: landscape) {
+            .project-header {
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            .project-header h1 {
+                font-size: 1.6em;
+            }
+
+            .nav-pills {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-pill {
+                flex: 0 1 auto;
+                margin: 5px;
             }
         }
     </style>
@@ -773,19 +1050,6 @@
 
     <script>
         // JavaScript for interactive functionality
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Update nav pills
-            const navPills = document.querySelectorAll('.nav-pill');
-            navPills.forEach(pill => pill.classList.remove('active'));
-            event.target.classList.add('active');
-        }
 
         function toggleCell(header) {
             const content = header.nextElementSibling;
@@ -800,24 +1064,155 @@
             }
         }
 
+
+
+        // Mobile-friendly navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav pills
+            const navPills = document.querySelectorAll('.nav-pill');
+            navPills.forEach(pill => pill.classList.remove('active'));
+            
+            // Find the clicked nav pill and make it active
+            const clickedPill = Array.from(navPills).find(pill => 
+                pill.getAttribute('onclick').includes(sectionId)
+            );
+            if (clickedPill) {
+                clickedPill.classList.add('active');
+            }
+        }
+
+        // Enhanced mobile touch handling
+        function addTouchSupport() {
+            // Add touch feedback for interactive elements
+            const interactiveElements = document.querySelectorAll('.nav-pill, .cell-header, .copy-button');
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.opacity = '0.7';
+                }, { passive: true });
+                
+                element.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.opacity = '';
+                    }, 150);
+                }, { passive: true });
+            });
+        }
+
+        // Improved copy function with mobile feedback
         function copyCode(button) {
             const codeBlock = button.closest('.code-block').querySelector('code');
             const text = codeBlock.textContent;
             
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                }, 2000);
-            });
+            // Try modern clipboard API first, fallback for older browsers
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopyFeedback(button);
+                }).catch(() => {
+                    fallbackCopy(text, button);
+                });
+            } else {
+                fallbackCopy(text, button);
+            }
         }
 
-        // Auto-expand first cell in each section
+        function showCopyFeedback(button) {
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            button.style.background = '#22c55e';
+            
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.style.background = '';
+            }, 2000);
+        }
+
+        function fallbackCopy(text, button) {
+            // Fallback for older browsers or non-secure contexts
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopyFeedback(button);
+            } catch (err) {
+                button.innerHTML = '<i class="fas fa-times"></i> Failed';
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                }, 2000);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Smooth scrolling for mobile navigation
+        function smoothScrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start',
+                    inline: 'nearest'
+                });
+            }
+        }
+
+        // Enhanced nav pill click handler
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.nav-pill')) {
+                const pill = e.target.closest('.nav-pill');
+                const onclick = pill.getAttribute('onclick');
+                if (onclick) {
+                    const sectionId = onclick.match(/showSection\('([^']+)'\)/)?.[1];
+                    if (sectionId) {
+                        showSection(sectionId);
+                        // Small delay for mobile to process the DOM changes
+                        setTimeout(() => smoothScrollToSection(sectionId), 100);
+                    }
+                }
+            }
+        });
+
+        // Auto-expand first cell in each section and initialize mobile features
         document.addEventListener('DOMContentLoaded', function() {
+            // Add mobile touch support
+            addTouchSupport();
+            
+            // Auto-expand first cells
             const firstCells = document.querySelectorAll('.section .notebook-cell:first-child .cell-header');
             firstCells.forEach(header => {
                 toggleCell(header);
+            });
+
+            // Prevent zoom on input focus (mobile)
+            if (window.innerWidth <= 768) {
+                const viewportMeta = document.querySelector('meta[name="viewport"]');
+                if (viewportMeta) {
+                    viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                }
+            }
+
+            // Handle orientation changes
+            window.addEventListener('orientationchange', function() {
+                setTimeout(() => {
+                    // Force a repaint to fix any layout issues
+                    document.body.style.display = 'none';
+                    document.body.offsetHeight; // trigger reflow
+                    document.body.style.display = '';
+                }, 100);
             });
         });
     </script>
