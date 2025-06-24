@@ -358,6 +358,69 @@
             color: #991b1b;
         }
 
+        /* Glossary Styles */
+        .question-glossary {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #2563eb;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15);
+            backdrop-filter: blur(4px);
+        }
+
+        .question-glossary h4 {
+            margin: 0 0 20px 0;
+            color: #1e40af;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2em;
+        }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .glossary-term-box {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .glossary-term-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+            border-color: #2563eb;
+        }
+
+        .glossary-term-box h5 {
+            margin: 0 0 10px 0;
+            color: #1e40af;
+            font-weight: 700;
+            font-size: 1.1em;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 8px;
+        }
+
+        .glossary-term-box p {
+            margin: 8px 0;
+            color: #4b5563;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .glossary-term-box p strong {
+            color: #1e40af;
+            font-weight: 600;
+        }
+
         /* Enhanced Mobile Responsiveness */
         @media (max-width: 768px) {
             body {
@@ -578,6 +641,37 @@
                 max-width: 100%;
                 box-sizing: border-box;
             }
+
+            /* Mobile Glossary Styles */
+            .question-glossary {
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 8px;
+            }
+
+            .question-glossary h4 {
+                font-size: 1em;
+                margin-bottom: 15px;
+            }
+
+            .glossary-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .glossary-term-box {
+                padding: 15px;
+                border-radius: 8px;
+            }
+
+            .glossary-term-box h5 {
+                font-size: 1em;
+                margin-bottom: 8px;
+            }
+
+            .glossary-term-box p {
+                font-size: 0.85em;
+            }
         }
 
         /* Extra small screens (phones in portrait) */
@@ -735,6 +829,42 @@
                         • Reshaped to include channel dimension (28, 28, 1) for CNN input<br>
                         • Labels converted to one-hot encoding for multi-class classification</p>
                     </div>
+
+                    <div class="question-glossary">
+                        <h4><i class="fas fa-book"></i> 📚 Data Preparation Glossary</h4>
+                        <div class="glossary-grid">
+                            <div class="glossary-term-box">
+                                <h5>MNIST Dataset</h5>
+                                <p><strong>Definition:</strong> A famous dataset of 70,000 handwritten digits (0-9) used for machine learning training.</p>
+                                <p><strong>Context:</strong> The "Hello World" of computer vision - perfect for learning CNN basics!</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Normalization</h5>
+                                <p><strong>Definition:</strong> Scaling pixel values from 0-255 range to 0-1 range by dividing by 255.</p>
+                                <p><strong>Why Important:</strong> Helps the neural network learn faster and more stable.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Reshape</h5>
+                                <p><strong>Definition:</strong> Changing data dimensions from (28, 28) to (28, 28, 1) to add channel dimension.</p>
+                                <p><strong>Purpose:</strong> CNNs expect 3D input: height × width × channels (grayscale = 1 channel).</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>One-Hot Encoding</h5>
+                                <p><strong>Definition:</strong> Converting labels like "3" into [0,0,0,1,0,0,0,0,0,0] format.</p>
+                                <p><strong>Example:</strong> Digit 3 becomes array where only index 3 = 1, rest = 0.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Training/Test Split</h5>
+                                <p><strong>Definition:</strong> Separating data into training set (60,000) and test set (10,000).</p>
+                                <p><strong>Purpose:</strong> Train on one set, evaluate on unseen data to check real performance.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Grayscale</h5>
+                                <p><strong>Definition:</strong> Images with only intensity values (0-255), no color information.</p>
+                                <p><strong>Advantage:</strong> Simpler than RGB, perfect for digit recognition tasks.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -825,6 +955,57 @@
                         • <strong>Global Average Pooling:</strong> More efficient than traditional flatten + dense<br>
                         • <strong>Progressive filters:</strong> 32 → 64 → 128 filters for hierarchical feature learning</p>
                     </div>
+
+                    <div class="question-glossary">
+                        <h4><i class="fas fa-cogs"></i> 🏗️ CNN Architecture Glossary</h4>
+                        <div class="glossary-grid">
+                            <div class="glossary-term-box">
+                                <h5>CNN (Convolutional Neural Network)</h5>
+                                <p><strong>Definition:</strong> A type of neural network designed for processing grid-like data such as images.</p>
+                                <p><strong>Key Feature:</strong> Uses convolution operations to detect local patterns and features.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Conv2D Layer</h5>
+                                <p><strong>Definition:</strong> A layer that applies multiple filters to detect features like edges, shapes.</p>
+                                <p><strong>Example:</strong> 32 filters means 32 different feature detectors running simultaneously.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Filters/Kernels</h5>
+                                <p><strong>Definition:</strong> Small matrices (e.g., 3×3) that slide over images to detect patterns.</p>
+                                <p><strong>Function:</strong> Each filter learns to recognize specific features like horizontal edges.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Max Pooling</h5>
+                                <p><strong>Definition:</strong> Reduces image size by taking maximum value from each 2×2 region.</p>
+                                <p><strong>Benefit:</strong> Makes network faster and reduces overfitting while keeping important features.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Batch Normalization</h5>
+                                <p><strong>Definition:</strong> Normalizes inputs to each layer to have mean=0, std=1.</p>
+                                <p><strong>Result:</strong> Faster training, more stable learning, higher accuracy.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Dropout</h5>
+                                <p><strong>Definition:</strong> Randomly "turns off" some neurons during training (e.g., 25% or 50%).</p>
+                                <p><strong>Purpose:</strong> Prevents overfitting by forcing network to not rely on specific neurons.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>ReLU Activation</h5>
+                                <p><strong>Definition:</strong> Activation function that outputs max(0, x) - removes negative values.</p>
+                                <p><strong>Why Popular:</strong> Simple, fast, and helps networks learn complex patterns.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Global Average Pooling</h5>
+                                <p><strong>Definition:</strong> Takes average of entire feature map instead of flattening.</p>
+                                <p><strong>Advantage:</strong> Fewer parameters, less overfitting, more efficient than Dense layers.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Sequential Model</h5>
+                                <p><strong>Definition:</strong> A linear stack of layers where each layer has exactly one input and output.</p>
+                                <p><strong>Usage:</strong> Perfect for most CNN architectures with straightforward layer progression.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -902,6 +1083,57 @@
                     <div class="insight-box">
                         <h4>🎉 Excellent Results!</h4>
                         <p>Our CNN achieved <strong>99.17% test accuracy</strong> in just 5 epochs! The model shows strong performance with minimal overfitting, thanks to batch normalization and dropout regularization.</p>
+                    </div>
+
+                    <div class="question-glossary">
+                        <h4><i class="fas fa-chart-line"></i> 🚀 Training & Optimization Glossary</h4>
+                        <div class="glossary-grid">
+                            <div class="glossary-term-box">
+                                <h5>Adam Optimizer</h5>
+                                <p><strong>Definition:</strong> An advanced optimization algorithm that adapts learning rate for each parameter.</p>
+                                <p><strong>Why Best:</strong> Combines benefits of momentum and RMSprop - faster convergence, less tuning.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Categorical Crossentropy</h5>
+                                <p><strong>Definition:</strong> Loss function for multi-class classification (0, 1, 2, ..., 9).</p>
+                                <p><strong>Purpose:</strong> Measures how far predicted probabilities are from true labels.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Epochs</h5>
+                                <p><strong>Definition:</strong> One complete pass through the entire training dataset.</p>
+                                <p><strong>Example:</strong> 5 epochs = model sees all 60,000 training images 5 times.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Batch Size</h5>
+                                <p><strong>Definition:</strong> Number of training examples processed together (64 in our case).</p>
+                                <p><strong>Trade-off:</strong> Larger batches = faster training, smaller batches = better convergence.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Validation Split</h5>
+                                <p><strong>Definition:</strong> Using 10% of training data to monitor performance during training.</p>
+                                <p><strong>Purpose:</strong> Detect overfitting early without touching the test set.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Training Accuracy</h5>
+                                <p><strong>Definition:</strong> Percentage of training examples correctly classified.</p>
+                                <p><strong>Progress:</strong> Ours improved from 79.29% → 98.66% over 5 epochs.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Validation Accuracy</h5>
+                                <p><strong>Definition:</strong> Accuracy on unseen validation data during training.</p>
+                                <p><strong>Importance:</strong> Better indicator of real performance than training accuracy.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Loss Function</h5>
+                                <p><strong>Definition:</strong> Measures how wrong the model's predictions are.</p>
+                                <p><strong>Goal:</strong> Training tries to minimize this value (ours: 0.6562 → 0.0464).</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Overfitting</h5>
+                                <p><strong>Definition:</strong> When model memorizes training data but fails on new data.</p>
+                                <p><strong>Signs:</strong> Training accuracy ≫ validation accuracy. We avoided this!</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1042,6 +1274,57 @@
                     <div class="insight-box">
                         <h4>🎯 The Beauty of CNNs:</h4>
                         <p>Each filter in our CNN automatically learned to detect specific patterns! The first layer detects simple edges and shapes, while deeper layers combine these to recognize complex digit patterns. This hierarchical learning is what makes CNNs so powerful for image recognition.</p>
+                    </div>
+
+                    <div class="question-glossary">
+                        <h4><i class="fas fa-eye"></i> 🔍 Predictions & Evaluation Glossary</h4>
+                        <div class="glossary-grid">
+                            <div class="glossary-term-box">
+                                <h5>Prediction</h5>
+                                <p><strong>Definition:</strong> The output of the model when given a new, unseen input image.</p>
+                                <p><strong>Process:</strong> Input → CNN layers → Probability distribution → Highest probability = prediction.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Softmax</h5>
+                                <p><strong>Definition:</strong> Final layer that converts raw outputs to probabilities that sum to 1.</p>
+                                <p><strong>Example:</strong> [0.1, 0.05, 0.8, 0.05] means 80% confidence it's digit "2".</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Confidence Score</h5>
+                                <p><strong>Definition:</strong> The probability (0-1) that the model assigns to its top prediction.</p>
+                                <p><strong>Interpretation:</strong> Higher scores (>0.9) indicate more certain predictions.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Feature Maps</h5>
+                                <p><strong>Definition:</strong> Outputs of convolutional layers showing what patterns were detected.</p>
+                                <p><strong>Visualization:</strong> First layer: 32 feature maps (28×28×32), each highlighting different patterns.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Activation Model</h5>
+                                <p><strong>Definition:</strong> A modified version of our CNN that outputs intermediate layer results.</p>
+                                <p><strong>Purpose:</strong> Helps us see what the network learned at each layer.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Test Accuracy</h5>
+                                <p><strong>Definition:</strong> Percentage of test images (never seen during training) correctly classified.</p>
+                                <p><strong>Our Result:</strong> 99.17% - means 9,917 out of 10,000 test images correct!</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Confusion Matrix</h5>
+                                <p><strong>Definition:</strong> Table showing which digits get confused with others.</p>
+                                <p><strong>Example:</strong> How many 0s were incorrectly predicted as 6s (similar shapes).</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Misclassification</h5>
+                                <p><strong>Definition:</strong> When the model predicts wrong digit (like predicting 6 when true digit is 0).</p>
+                                <p><strong>Common Causes:</strong> Ambiguous handwriting, similar-looking digits, poor image quality.</p>
+                            </div>
+                            <div class="glossary-term-box">
+                                <h5>Hierarchical Learning</h5>
+                                <p><strong>Definition:</strong> How CNNs learn simple features first, then combine them into complex patterns.</p>
+                                <p><strong>Example:</strong> Layer 1: edges → Layer 2: curves → Layer 3: digit shapes.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
