@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeMobileMenu();
     initializeInteractiveSteps();
     initializeScrollToTop();
+    initialize3DCNNDemo(); // Initialize the 3D CNN animation
 });
 
 // Initialize the ML predictor
@@ -246,6 +247,8 @@ async function performRealPrediction(canvas) {
             hasGoodConfidence,
             allPredictions: formattedPredictions
         });
+        
+
         
         // Show results after a brief delay for better UX
         setTimeout(() => {
@@ -627,14 +630,10 @@ Happy learning! 🎉
 
 // Learning Progress Management
 function initializeInteractiveSteps() {
-    // Initialize scroll-based progress tracking
     initializeScrollProgress();
-    
-    // Initialize all step functionalities immediately
     initializePixelGrid();
     initializeConvolution();
-    initializePooling();
-    initializeClassification();
+    initialize3DCNNDemo(); // Add 3D CNN animation demo
 }
 
 function initializeScrollProgress() {
@@ -742,7 +741,7 @@ function initializePixelGrid() {
             0,0,0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -989,7 +988,7 @@ function initializeConvolution() {
         0,0,0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -1709,4 +1708,398 @@ function initializeScrollToTop() {
             behavior: 'smooth'
         });
     });
+}
+
+// 3D CNN Animation Demo - Standalone Animated Visualization
+function initialize3DCNNDemo() {
+    const playButton = document.getElementById('play3DDemo');
+    const pauseButton = document.getElementById('pause3DDemo');
+    const restartButton = document.getElementById('restart3DDemo');
+    const viewport = document.getElementById('cnn3DViewport');
+    const currentStage = document.getElementById('currentStage');
+    
+    if (!viewport) return;
+    
+    let animationRunning = false;
+    let animationTimeout = null;
+    let currentStageIndex = 0;
+    
+    const stages = [
+        {
+            name: 'input',
+            title: '🖼️ Input Processing',
+            description: 'A handwritten "7" enters as a 28×28 pixel matrix. Watch each pixel light up as it gets processed!'
+        },
+        {
+            name: 'conv1', 
+            title: '🔍 First Convolution',
+            description: '32 edge detection filters scan the image simultaneously. Each filter finds different features like lines and curves.'
+        },
+        {
+            name: 'pool1',
+            title: '📉 Max Pooling',
+            description: 'Downsampling reduces the image size by 50% while keeping the most important features. This makes processing faster!'
+        },
+        {
+            name: 'conv2',
+            title: '🧠 Second Convolution', 
+            description: '64 deeper filters combine basic features into complex patterns. The network is learning to recognize digit shapes!'
+        },
+        {
+            name: 'output',
+            title: '🎯 Final Classification',
+            description: '10 output neurons compete! The "7" neuron wins with 94.2% confidence - that\'s how the AI knows what you drew!'
+        }
+    ];
+    
+    // Initialize the 3D scene
+    function initializeScene() {
+        viewport.innerHTML = `
+            <div class="cnn-3d-scene">
+                <div class="cnn-layer input-layer">
+                    <div class="layer-grid input-grid" id="inputGrid"></div>
+                    <div class="layer-label">Input (28×28)</div>
+                </div>
+                <div class="cnn-layer conv-layer-1">
+                    <div class="layer-grid conv-grid" id="conv1Grid"></div>
+                    <div class="layer-label">Conv Layer 1</div>
+                </div>
+                <div class="cnn-layer pool-layer-1">
+                    <div class="layer-grid pool-grid" id="pool1Grid"></div>
+                    <div class="layer-label">Pool Layer 1</div>
+                </div>
+                <div class="cnn-layer conv-layer-2">
+                    <div class="layer-grid conv-grid" id="conv2Grid"></div>
+                    <div class="layer-label">Conv Layer 2</div>
+                </div>
+                <div class="cnn-layer output-layer">
+                    <div class="layer-grid output-grid" id="outputGrid"></div>
+                    <div class="layer-label">Output (10 classes)</div>
+                </div>
+            </div>
+        `;
+        
+        // Create neural nodes for each layer
+        createLayerNodes('inputGrid', 64, 'digit7'); // 8x8 sample
+        createLayerNodes('conv1Grid', 36, 'edges'); // 6x6 
+        createLayerNodes('pool1Grid', 16, 'pooled'); // 4x4
+        createLayerNodes('conv2Grid', 36, 'features'); // 6x6
+        createLayerNodes('outputGrid', 10, 'output'); // 2x5 (representing 10 classes)
+    }
+    
+    function createLayerNodes(gridId, count, type) {
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+        
+        for (let i = 0; i < count; i++) {
+            const node = document.createElement('div');
+            node.className = 'neural-node';
+            node.dataset.type = type;
+            node.dataset.index = i;
+            grid.appendChild(node);
+        }
+    }
+    
+    function updateStageUI(stageIndex) {
+        // Update stage progress
+        const stageElements = document.querySelectorAll('.stage');
+        stageElements.forEach((stage, index) => {
+            stage.classList.remove('active', 'completed');
+            if (index < stageIndex) {
+                stage.classList.add('completed');
+            } else if (index === stageIndex) {
+                stage.classList.add('active');
+            }
+        });
+        
+        // Update current stage info with detailed descriptions
+        const stage = stages[stageIndex];
+        if (currentStage && stage) {
+            currentStage.innerHTML = `
+                <h4>${stage.title}</h4>
+                <p>${stage.description}</p>
+            `;
+        }
+    }
+    
+    function animateStage(stageIndex) {
+        if (stageIndex >= stages.length) {
+            // Animation complete - show impressive results
+            setTimeout(() => {
+                if (currentStage) {
+                    currentStage.innerHTML = `
+                        <h4>🎉 Neural Network Classification Complete!</h4>
+                        <p>✨ The CNN processed 784 input pixels through 93,322 parameters in milliseconds to correctly identify "7" with 94.2% confidence!</p>
+                        <div style="margin-top: 1rem; padding: 1rem; background: linear-gradient(135deg, #10b981, #06b6d4); border-radius: 0.5rem; color: white;">
+                            <strong>🚀 Amazing Performance:</strong> From raw pixels to prediction in just 5 layers!
+                        </div>
+                    `;
+                }
+                setTimeout(() => {
+                    if (animationRunning) {
+                        currentStageIndex = 0;
+                        animateStage(0); // Loop the animation automatically
+                    }
+                }, 4000); // Give more time to read the results
+            }, 1000);
+            return;
+        }
+        
+        const stage = stages[stageIndex];
+        updateStageUI(stageIndex);
+        
+        // Animate current layer
+        switch(stage.name) {
+            case 'input':
+                animateInputLayer();
+                break;
+            case 'conv1':
+                animateConvolutionLayer('conv1Grid', 'inputGrid');
+                break;
+            case 'pool1':
+                animatePoolingLayer('pool1Grid', 'conv1Grid');
+                break;
+            case 'conv2':
+                animateConvolutionLayer('conv2Grid', 'pool1Grid');
+                break;
+            case 'output':
+                animateOutputLayer();
+                break;
+        }
+        
+        // Schedule next stage
+        if (animationRunning) {
+            animationTimeout = setTimeout(() => {
+                currentStageIndex++;
+                animateStage(currentStageIndex);
+            }, 4000); // Increased timing for better visibility
+        }
+    }
+    
+    function animateInputLayer() {
+        const nodes = document.querySelectorAll('#inputGrid .neural-node');
+        
+        // Create digit "7" pattern
+        const digit7Pattern = [
+            1,1,1,1,1,1,0,0,
+            0,0,0,0,0,1,0,0,
+            0,0,0,0,1,0,0,0,
+            0,0,0,1,0,0,0,0,
+            0,0,1,0,0,0,0,0,
+            0,1,0,0,0,0,0,0,
+            1,0,0,0,0,0,0,0,
+            1,0,0,0,0,0,0,0
+        ];
+        
+        nodes.forEach((node, index) => {
+            setTimeout(() => {
+                node.classList.add('active');
+                if (digit7Pattern[index]) {
+                    node.classList.add('high-activation');
+                }
+                
+                // Add data particles more frequently
+                if (index % 6 === 0) addDataParticle('inputGrid', 'conv1Grid');
+            }, index * 50);
+        });
+    }
+    
+    function animateConvolutionLayer(targetId, sourceId) {
+        const nodes = document.querySelectorAll(`#${targetId} .neural-node`);
+        
+        nodes.forEach((node, index) => {
+            setTimeout(() => {
+                node.classList.add('active');
+                
+                // Random activation pattern - higher for edge-like features
+                const activation = Math.random();
+                if (activation > 0.7) {
+                    node.classList.add('high-activation');
+                } else if (activation > 0.4) {
+                    node.classList.add('medium-activation');
+                }
+                
+                // Add data particles more frequently
+                if (index % 4 === 0) addDataParticle(sourceId, targetId);
+            }, index * 80);
+        });
+    }
+    
+    function animatePoolingLayer(targetId, sourceId) {
+        const nodes = document.querySelectorAll(`#${targetId} .neural-node`);
+        
+        nodes.forEach((node, index) => {
+            setTimeout(() => {
+                node.classList.add('active');
+                
+                // Pooling keeps strong activations
+                if (Math.random() > 0.5) {
+                    node.classList.add('medium-activation');
+                }
+                
+                // Add data particles more frequently
+                if (index % 3 === 0) addDataParticle(sourceId, targetId);
+            }, index * 100);
+        });
+    }
+    
+    function animateOutputLayer() {
+        const nodes = document.querySelectorAll('#outputGrid .neural-node');
+        
+        // Simulate confidence scores for digits 0-9
+        const confidences = [0.02, 0.01, 0.03, 0.01, 0.05, 0.03, 0.01, 0.94, 0.01, 0.02]; // "7" has highest
+        
+        nodes.forEach((node, index) => {
+            setTimeout(() => {
+                node.classList.add('active');
+                
+                const confidence = confidences[index] || 0.01;
+                if (confidence > 0.8) {
+                    node.classList.add('high-activation'); // This is "7"
+                } else if (confidence > 0.1) {
+                    node.classList.add('medium-activation');
+                }
+                
+                // Add final data particle
+                if (index === 7) addDataParticle('conv2Grid', 'outputGrid'); // Highlight path to "7"
+            }, index * 150);
+        });
+    }
+    
+    function addDataParticle(fromId, toId) {
+        const fromElement = document.getElementById(fromId);
+        const toElement = document.getElementById(toId);
+        const scene = document.querySelector('.cnn-3d-scene');
+        
+        if (!fromElement || !toElement || !scene) return;
+        
+        const particle = document.createElement('div');
+        particle.className = 'data-particle';
+        
+        const fromRect = fromElement.getBoundingClientRect();
+        const toRect = toElement.getBoundingClientRect();
+        const sceneRect = scene.getBoundingClientRect();
+        
+        particle.style.left = `${fromRect.left - sceneRect.left + fromRect.width/2}px`;
+        particle.style.top = `${fromRect.top - sceneRect.top + fromRect.height/2}px`;
+        
+        scene.appendChild(particle);
+        
+        // Animate particle movement
+        requestAnimationFrame(() => {
+            particle.style.transition = 'all 1s ease';
+            particle.style.left = `${toRect.left - sceneRect.left + toRect.width/2}px`;
+            particle.style.top = `${toRect.top - sceneRect.top + toRect.height/2}px`;
+            particle.style.opacity = '0';
+        });
+        
+        // Remove particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) particle.parentNode.removeChild(particle);
+        }, 1000);
+    }
+    
+    function resetAnimation() {
+        // Clear all active states
+        const nodes = document.querySelectorAll('.neural-node');
+        nodes.forEach(node => {
+            node.classList.remove('active', 'high-activation', 'medium-activation');
+        });
+        
+        // Clear data particles
+        const particles = document.querySelectorAll('.data-particle');
+        particles.forEach(particle => particle.remove());
+        
+        currentStageIndex = 0;
+        updateStageUI(0);
+        
+        if (currentStage) {
+            currentStage.innerHTML = `
+                <h4>🚀 Ready to Start</h4>
+                <p>Click "Start CNN Animation" to see how a real neural network processes a handwritten "7" through 5 layers of computation! Each stage will show detailed explanations as the animation progresses.</p>
+            `;
+        }
+    }
+    
+    // Event listeners
+    playButton?.addEventListener('click', () => {
+        if (!animationRunning) {
+            animationRunning = true;
+            playButton.style.display = 'none';
+            pauseButton.style.display = 'inline-flex';
+            
+            // Continue from current stage instead of restarting
+            setTimeout(() => animateStage(currentStageIndex), 200);
+        }
+    });
+    
+    pauseButton?.addEventListener('click', () => {
+        animationRunning = false;
+        playButton.style.display = 'inline-flex';
+        pauseButton.style.display = 'none';
+        
+        if (animationTimeout) {
+            clearTimeout(animationTimeout);
+            animationTimeout = null;
+        }
+    });
+    
+    restartButton?.addEventListener('click', () => {
+        animationRunning = false;
+        playButton.style.display = 'inline-flex';
+        pauseButton.style.display = 'none';
+        
+        if (animationTimeout) {
+            clearTimeout(animationTimeout);
+            animationTimeout = null;
+        }
+        
+        resetAnimation();
+    });
+    
+    // Make stage buttons clickable
+    function makeStagesClickable() {
+        const stageButtons = document.querySelectorAll('.stage');
+        stageButtons.forEach((button, index) => {
+            button.style.cursor = 'pointer';
+            button.addEventListener('click', () => {
+                // Only pause and jump if clicking on a different stage than current
+                if (index !== currentStageIndex) {
+                    if (animationRunning) {
+                        // Pause current animation
+                        animationRunning = false;
+                        if (animationTimeout) {
+                            clearTimeout(animationTimeout);
+                            animationTimeout = null;
+                        }
+                        playButton.style.display = 'inline-flex';
+                        pauseButton.style.display = 'none';
+                    }
+                    
+                    // Jump to selected stage
+                    currentStageIndex = index;
+                    resetAnimation();
+                    updateStageUI(index);
+                    
+                    // Show stage info immediately
+                    const stage = stages[index];
+                    if (currentStage && stage) {
+                        currentStage.innerHTML = `
+                            <h4>${stage.title}</h4>
+                            <p>${stage.description}</p>
+                            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+                                <em>Click "Start CNN Animation" to see this stage in action!</em>
+                            </div>
+                        `;
+                    }
+                }
+                // If clicking on current stage during animation, just let it continue
+            });
+        });
+    }
+
+    // Initialize the scene on load
+    initializeScene();
+    resetAnimation();
+    makeStagesClickable();
 } 

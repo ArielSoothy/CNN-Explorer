@@ -84,53 +84,43 @@
                 <h2 class="section-title">How Do Computers See Numbers?</h2>
                 <p class="section-description">
                     Discover the fascinating journey of how CNNs transform handwritten digits into predictions. 
-                    Follow each step below as we break down this complex process into understandable pieces.
+                    Explore these important concepts that form the foundation of computer vision.
                 </p>
             </div>
             
             <!-- Learning Progress Indicator -->
             <div class="learning-progress">
                 <div class="progress-header">
-                    <h3>Your Learning Journey</h3>
-                    <p>Follow the CNN pipeline from input to prediction</p>
+                    <h3>Core CNN Concepts</h3>
+                    <p>Essential topics for understanding computer vision</p>
                 </div>
                 <div class="progress-steps">
                     <div class="progress-step" data-step="1">
                         <div class="step-circle">1</div>
-                        <span>Image Input</span>
+                        <span>Image Processing</span>
                     </div>
                     <div class="progress-line"></div>
                     <div class="progress-step" data-step="2">
                         <div class="step-circle">2</div>
                         <span>Feature Detection</span>
                     </div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step" data-step="3">
-                        <div class="step-circle">3</div>
-                        <span>Pooling</span>
-                    </div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step" data-step="4">
-                        <div class="step-circle">4</div>
-                        <span>Classification</span>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Step 1: Image Input -->
+    <!-- Image Processing Topic -->
     <section id="step-1" class="section learning-step">
         <div class="container">
             <div class="step-header">
                 <div class="step-badge">
                     <span class="step-number">01</span>
-                    <span class="step-label">First Step</span>
+                    <span class="step-label">Core Topic</span>
                 </div>
-                <h2 class="step-title">How Images Become Numbers</h2>
+                <h2 class="step-title">Image Processing: From Visual to Numerical</h2>
                 <p class="step-description">
-                    Watch as a handwritten digit transforms into a grid of numbers that computers can understand.
-                    This is the foundation of all computer vision - converting visual information into mathematical data.
+                    Understanding how images transform into numbers that computers can understand.
+                    This fundamental concept enables all computer vision applications.
                 </p>
             </div>
             
@@ -219,18 +209,18 @@
         </div>
     </section>
 
-    <!-- Step 2: Feature Detection -->
+    <!-- Feature Detection Topic -->
     <section id="step-2" class="section learning-step">
         <div class="container">
             <div class="step-header">
                 <div class="step-badge">
                     <span class="step-number">02</span>
-                    <span class="step-label">Feature Extraction</span>
+                    <span class="step-label">Core Topic</span>
                 </div>
-                <h2 class="step-title">Finding Features with Filters</h2>
+                <h2 class="step-title">Feature Detection: Finding Patterns</h2>
                 <p class="step-description">
-                    Now that we have numbers, the CNN uses special filters to detect patterns like edges and lines.
-                    Watch how convolution filters scan across the image to highlight important features.
+                    Explore how CNNs use specialized filters to detect important patterns like edges and lines.
+                    This is where the magic of pattern recognition begins.
                 </p>
             </div>
             
@@ -295,171 +285,53 @@
         </div>
     </section>
 
-    <!-- Step 3: Pooling -->
-    <section id="step-3" class="section learning-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-badge">
-                    <span class="step-number">03</span>
-                    <span class="step-label">Data Reduction</span>
-                </div>
-                <h2 class="step-title">Simplifying with Pooling</h2>
-                <p class="step-description">
-                    The feature maps are quite large, so we use pooling to reduce their size while keeping the most important information.
-                    This makes the network faster and more efficient.
-                </p>
-            </div>
-            
-            <div class="interactive-step" id="step-3-content">
-                <div class="step-content">
-                    <div class="step-visualization">
-                        <div class="pooling-container">
-                            <div class="before-pooling">
-                                <h4>Before Pooling</h4>
-                                <div class="pooling-matrix" id="beforePooling"></div>
-                                <p class="section-label">20×20 Feature Map (from Step 2)</p>
-                            </div>
-                            <div class="pooling-process">
-                                <div class="conversion-arrow">
-                                    <i class="fas fa-arrow-down"></i>
-                                    <span>Applies</span>
-                                </div>
-                                <h4>Max Pooling (2×2)</h4>
-                                <div class="pooling-window" id="poolingWindow">Max</div>
-                                <p>Takes maximum value from each 2×2 region</p>
-                                <div class="conversion-arrow">
-                                    <i class="fas fa-arrow-down"></i>
-                                    <span>Produces</span>
-                                </div>
-                            </div>
-                            <div class="after-pooling">
-                                <h4>After Pooling</h4>
-                                <div class="pooling-matrix" id="afterPooling"></div>
-                                <p class="section-label">10×10 Pooled Output (50% reduction)</p>
-                            </div>
-                        </div>
-                        <div class="step-controls">
-                            <button class="control-btn" id="playStep3">
-                                <i class="fas fa-play"></i> Start Pooling
-                            </button>
-                            <button class="control-btn" id="pauseStep3" style="display: none;">
-                                <i class="fas fa-pause"></i> Pause
-                            </button>
-                            <button class="control-btn" id="resetStep3">
-                                <i class="fas fa-redo"></i> Reset
-                            </button>
-                        </div>
-                    </div>
-                    <div class="step-explanation">
-                        <h3>Understanding Pooling</h3>
-                        <ul class="explanation-list">
-                            <li><strong>Size Reduction:</strong> Pooling reduces the spatial dimensions of feature maps</li>
-                            <li><strong>Max Pooling:</strong> Takes the maximum value from each pooling window</li>
-                            <li><strong>Translation Invariance:</strong> Makes the network less sensitive to small shifts</li>
-                            <li><strong>Efficiency:</strong> Fewer parameters means faster training and inference</li>
-                        </ul>
-                        <div class="interaction-hint">
-                            <i class="fas fa-mouse-pointer"></i>
-                            <span>Watch the pooling window scan across the feature map!</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Step 4: Classification -->
-    <section id="step-4" class="section learning-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-badge">
-                    <span class="step-number">04</span>
-                    <span class="step-label">Final Decision</span>
-                </div>
-                <h2 class="step-title">Making the Final Prediction</h2>
-                <p class="step-description">
-                    Finally, all the features are combined to make a prediction. Watch how the network processes
-                    all the extracted features and determines which digit it thinks it sees.
-                </p>
-            </div>
-            
-            <div class="interactive-step" id="step-4-content">
-                <div class="step-content">
-                    <div class="step-visualization">
-                        <div class="classification-container">
-                            <div class="features-input">
-                                <h4>Flattened Features</h4>
-                                <div class="feature-vector" id="featureVector"></div>
-                                <p>All features combined into one vector</p>
-                            </div>
-                            <div class="neural-network">
-                                <h4>Dense Layers</h4>
-                                <div class="network-layers" id="networkLayers"></div>
-                            </div>
-                            <div class="final-prediction">
-                                <h4>Final Prediction</h4>
-                                <div class="prediction-bars" id="predictionBars"></div>
-                            </div>
-                        </div>
-                        <div class="step-controls">
-                            <button class="control-btn" id="playStep4">
-                                <i class="fas fa-play"></i> Start Classification
-                            </button>
-                            <button class="control-btn" id="pauseStep4" style="display: none;">
-                                <i class="fas fa-pause"></i> Pause
-                            </button>
-                            <button class="control-btn" id="resetStep4">
-                                <i class="fas fa-redo"></i> Reset
-                            </button>
-                        </div>
-                    </div>
-                    <div class="step-explanation">
-                        <h3>Understanding Classification</h3>
-                        <ul class="explanation-list">
-                            <li><strong>Flattening:</strong> All feature maps are combined into one long vector</li>
-                            <li><strong>Dense Layers:</strong> Fully connected layers learn complex patterns</li>
-                            <li><strong>Softmax:</strong> Final layer converts outputs to probabilities</li>
-                            <li><strong>Prediction:</strong> Highest probability determines the predicted digit</li>
-                        </ul>
-                        <div class="interaction-hint">
-                            <i class="fas fa-mouse-pointer"></i>
-                            <span>See how confidence builds up for the final prediction!</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Learning Summary -->
-    <section class="section learning-summary">
+    <!-- 3D CNN Animation Demo -->
+    <section id="cnn-3d-demo" class="section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🎉 Congratulations!</h2>
+                <h2 class="section-title">
+                    <i class="fas fa-cube"></i>
+                    3D CNN in Action: Live Animation
+                </h2>
                 <p class="section-description">
-                    You've just learned how CNNs work! From pixels to predictions, you've seen every step of the process.
-                    Now it's time to try it yourself with our interactive demo.
+                    Watch a real CNN process a handwritten "7" in stunning 3D! See 784 pixels transform through 5 neural layers, 
+                    with glowing activations and data particles flowing between neurons. This is exactly how AI recognizes what you draw!
                 </p>
             </div>
-            <div class="summary-stats">
-                <div class="stat-item">
-                    <div class="stat-number">4</div>
-                    <div class="stat-label">Steps Completed</div>
+
+            <div class="cnn-3d-demo-container">
+                <div class="demo-3d-viewport" id="cnn3DViewport">
+                    <!-- 3D Scene will be generated here -->
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">400</div>
-                    <div class="stat-label">Pixels Processed</div>
+                
+                <div class="demo-3d-controls">
+                    <button id="play3DDemo" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Start CNN Animation
+                    </button>
+                    <button id="pause3DDemo" class="btn btn-secondary" style="display: none;">
+                        <i class="fas fa-pause"></i> Pause Animation
+                    </button>
+                    <button id="restart3DDemo" class="btn btn-secondary">
+                        <i class="fas fa-redo"></i> Restart
+                    </button>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">99%</div>
-                    <div class="stat-label">Accuracy Achieved</div>
+                
+                <div class="demo-3d-info">
+                    <div class="current-stage" id="currentStage">
+                        <h4>Ready to Start</h4>
+                        <p>Click "Start CNN Animation" to see how neural networks process images</p>
+                    </div>
+                    
+                    <div class="stage-progress">
+                        <div class="progress-stages">
+                            <div class="stage active" data-stage="input">Input</div>
+                            <div class="stage" data-stage="conv1">Conv 1</div>
+                            <div class="stage" data-stage="pool1">Pool 1</div>
+                            <div class="stage" data-stage="conv2">Conv 2</div>
+                            <div class="stage" data-stage="output">Output</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="next-action">
-                <a href="#demo" class="btn btn-primary btn-large">
-                    <i class="fas fa-pencil-alt"></i>
-                    Try Drawing Your Own Digit
-                </a>
             </div>
         </div>
     </section>
@@ -473,7 +345,7 @@
                     Try It Yourself: Draw a Digit (1-4)
                 </h2>
                 <p class="section-description">
-                    Now that you understand how CNNs work, draw a digit from 1-4 and watch our CNN predict what you drew in real-time! 
+                    Now that you understand core CNN concepts, draw a digit from 1-4 and watch our CNN predict what you drew in real-time! 
                     <span class="model-limitation">This specialized model focuses on digits 1-4 for optimal accuracy.</span>
                 </p>
             </div>
@@ -516,6 +388,8 @@
                             </div>
                         </div>
                     </div>
+                    
+
                     
                     <div class="model-info">
                         <h4>AI Model Status</h4>
@@ -645,32 +519,6 @@
                         <div class="layer-description">
                             <h4>Output Layer</h4>
                             <p>Final prediction: 0, 1, 2, 3, 4, 5, 6, 7, 8, or 9</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="architecture-details">
-                    <h3>Key Features of Our CNN</h3>
-                    <div class="feature-grid">
-                        <div class="feature-item">
-                            <i class="fas fa-layer-group"></i>
-                            <h4>Deep Architecture</h4>
-                            <p>Multiple convolutional layers extract features at different levels of abstraction</p>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-shield-alt"></i>
-                            <h4>Batch Normalization</h4>
-                            <p>Keeps learning stable and helps the network train faster</p>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-random"></i>
-                            <h4>Dropout</h4>
-                            <p>Prevents overfitting by randomly turning off some neurons during training</p>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-compress"></i>
-                            <h4>Global Average Pooling</h4>
-                            <p>Efficiently reduces dimensions instead of traditional flattening</p>
                         </div>
                     </div>
                 </div>
