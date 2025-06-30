@@ -2102,4 +2102,948 @@ function initialize3DCNNDemo() {
     initializeScene();
     resetAnimation();
     makeStagesClickable();
-} 
+}
+
+// ===== Complete CNN Visualization Functionality =====
+function initializeCompleteCNNVisualization() {
+    console.log('🚀 Initializing Complete CNN Visualization');
+    
+    initializeHyperparameterControls();
+    initializeCNNPipeline();
+    updateHyperparameterEffects();
+}
+
+// Hyperparameter Controls
+function initializeHyperparameterControls() {
+    const controls = {
+        filterSize: document.getElementById('filterSize'),
+        numFilters: document.getElementById('numFilters'),
+        activationThreshold: document.getElementById('activationThreshold'),
+        poolingSize: document.getElementById('poolingSize')
+    };
+
+    // Update value displays and effects
+    Object.entries(controls).forEach(([param, slider]) => {
+        if (slider) {
+            const valueSpan = document.getElementById(param + 'Value');
+            
+            slider.addEventListener('input', (e) => {
+                const value = e.target.value;
+                if (valueSpan) {
+                    if (param === 'filterSize' || param === 'poolingSize') {
+                        valueSpan.textContent = `${value}×${value}`;
+                    } else {
+                        valueSpan.textContent = value;
+                    }
+                }
+                
+                // Update visual elements based on parameter changes
+                updateVisualParameters(param, parseInt(value) || parseFloat(value));
+                
+                // Update hyperparameter effects
+                updateHyperparameterEffects();
+            });
+        }
+    });
+}
+
+// Update visual parameters in real-time
+function updateVisualParameters(param, value) {
+    switch(param) {
+        case 'filterSize':
+            updateFilterSize(value);
+            break;
+        case 'numFilters':
+            updateFilterCounts(value);
+            break;
+        case 'activationThreshold':
+            updateActivationThreshold(value);
+            break;
+        case 'poolingSize':
+            updatePoolingSize(value);
+            break;
+    }
+}
+
+// Update filter size visualization
+function updateFilterSize(size) {
+    const filterKernel = document.getElementById('filterKernel');
+    const inputPatch = document.getElementById('inputPatch');
+    const conv1FilterSize = document.getElementById('conv1FilterSize');
+    
+    if (conv1FilterSize) conv1FilterSize.textContent = `${size}×${size}`;
+    
+    // Recreate filter kernel with new size
+    if (filterKernel) {
+        createFilterKernel(filterKernel, size);
+    }
+    if (inputPatch) {
+        createInputPatch(inputPatch, size);
+    }
+}
+
+// Update pooling size visualization
+function updatePoolingSize(size) {
+    const poolingWindow = document.getElementById('poolingWindow');
+    const poolingFormula = document.querySelector('.pooling-formula');
+    
+    if (poolingWindow) poolingWindow.textContent = `${size}×${size}`;
+    if (poolingFormula) poolingFormula.textContent = `max(${size}×${size})`;
+    
+    // Recreate pooling visualization
+    createPoolingVisualization(size);
+}
+
+// Update filter counts in the pipeline visualization
+function updateFilterCounts(filterCount) {
+    const conv1Filters = document.getElementById('conv1Filters');
+    const conv2Filters = document.getElementById('conv2Filters');
+    
+    if (conv1Filters) conv1Filters.textContent = filterCount;
+    if (conv2Filters) conv2Filters.textContent = filterCount * 2; // Second layer typically has more
+}
+
+// Update hyperparameter effect descriptions
+function updateHyperparameterEffects() {
+    const controls = {
+        filterSize: parseInt(document.getElementById('filterSize')?.value || 3),
+        numFilters: parseInt(document.getElementById('numFilters')?.value || 32),
+        activationThreshold: parseFloat(document.getElementById('activationThreshold')?.value || 0.5),
+        poolingSize: parseInt(document.getElementById('poolingSize')?.value || 2)
+    };
+
+    // Filter Size Effect
+    const filterSizeEffect = document.getElementById('filterSizeEffect');
+    if (filterSizeEffect) {
+        if (controls.filterSize === 3) {
+            filterSizeEffect.textContent = 'Fine Details';
+            filterSizeEffect.style.color = '#22c55e';
+        } else if (controls.filterSize === 5) {
+            filterSizeEffect.textContent = 'Medium Features';
+            filterSizeEffect.style.color = '#3b82f6';
+        } else {
+            filterSizeEffect.textContent = 'Large Patterns';
+            filterSizeEffect.style.color = '#f97316';
+        }
+    }
+
+    // Filters Effect
+    const filtersEffect = document.getElementById('filtersEffect');
+    if (filtersEffect) {
+        if (controls.numFilters < 16) {
+            filtersEffect.textContent = 'Simple';
+            filtersEffect.style.color = '#f97316';
+        } else if (controls.numFilters > 48) {
+            filtersEffect.textContent = 'Complex';
+            filtersEffect.style.color = '#3b82f6';
+        } else {
+            filtersEffect.textContent = 'Moderate';
+            filtersEffect.style.color = '#22c55e';
+        }
+    }
+
+    // Activation Threshold Effect
+    const activationEffect = document.getElementById('activationEffect');
+    if (activationEffect) {
+        if (controls.activationThreshold < 0.3) {
+            activationEffect.textContent = 'Very Sensitive';
+            activationEffect.style.color = '#f97316';
+        } else if (controls.activationThreshold > 0.7) {
+            activationEffect.textContent = 'Very Selective';
+            activationEffect.style.color = '#ef4444';
+        } else {
+            activationEffect.textContent = 'Balanced';
+            activationEffect.style.color = '#22c55e';
+        }
+    }
+
+    // Pooling Size Effect
+    const poolingEffect = document.getElementById('poolingEffect');
+    if (poolingEffect) {
+        if (controls.poolingSize === 2) {
+            poolingEffect.textContent = 'Preserves Detail';
+            poolingEffect.style.color = '#22c55e';
+        } else if (controls.poolingSize === 3) {
+            poolingEffect.textContent = 'Moderate Compression';
+            poolingEffect.style.color = '#3b82f6';
+        } else {
+            poolingEffect.textContent = 'High Compression';
+            poolingEffect.style.color = '#f97316';
+        }
+    }
+}
+
+// CNN Pipeline Functionality
+function initializeCNNPipeline() {
+    initializePipelineControls();
+    createInputCanvas();
+    createFeatureMaps();
+    createPredictionBars();
+    initializeTechnicalVisualizations();
+}
+
+// Initialize all technical visualizations
+function initializeTechnicalVisualizations() {
+    // Create filter kernel
+    const filterKernel = document.getElementById('filterKernel');
+    if (filterKernel) {
+        createFilterKernel(filterKernel, 3);
+    }
+    
+    // Create input patch
+    const inputPatch = document.getElementById('inputPatch');
+    if (inputPatch) {
+        createInputPatch(inputPatch, 3);
+    }
+    
+    // Create pooling visualization
+    createPoolingVisualization(2);
+    
+    // Create Conv2 technical visualizations
+    createConv2FilterKernel();
+    createConv2InputPatch();
+}
+
+// Pipeline Control Buttons
+function initializePipelineControls() {
+    const startBtn = document.getElementById('startCNNPipeline');
+    const pauseBtn = document.getElementById('pauseCNNPipeline');
+    const resetBtn = document.getElementById('resetCNNPipeline');
+    const speedBtn = document.getElementById('speedToggle');
+
+    let isRunning = false;
+    let isPaused = false;
+    let speed = 1;
+    
+    if (startBtn) {
+        startBtn.addEventListener('click', () => {
+            if (!isRunning || isPaused) {
+                startCNNPipelineAnimation();
+                isRunning = true;
+                isPaused = false;
+                
+                startBtn.style.display = 'none';
+                if (pauseBtn) pauseBtn.style.display = 'inline-flex';
+            }
+        });
+    }
+
+    if (pauseBtn) {
+        pauseBtn.addEventListener('click', () => {
+            pauseCNNPipelineAnimation();
+            isPaused = true;
+            
+            pauseBtn.style.display = 'none';
+            if (startBtn) startBtn.style.display = 'inline-flex';
+        });
+    }
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            resetCNNPipelineAnimation();
+            isRunning = false;
+            isPaused = false;
+            
+            if (pauseBtn) pauseBtn.style.display = 'none';
+            if (startBtn) startBtn.style.display = 'inline-flex';
+        });
+    }
+
+    if (speedBtn) {
+        speedBtn.addEventListener('click', () => {
+            speed = speed === 1 ? 2 : speed === 2 ? 0.5 : 1;
+            speedBtn.innerHTML = `<i class="fas fa-tachometer-alt"></i> Speed: ${speed}x`;
+            updateAnimationSpeed(speed);
+        });
+    }
+}
+
+// Create input canvas with a sample digit
+function createInputCanvas() {
+    const canvas = document.getElementById('inputCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas to higher resolution
+    const scale = 2;
+    canvas.width = 120 * scale;
+    canvas.height = 120 * scale;
+    canvas.style.width = '120px';
+    canvas.style.height = '120px';
+    ctx.scale(scale, scale);
+    
+    // Clear canvas
+    ctx.fillStyle = '#f8fafc';
+    ctx.fillRect(0, 0, 120, 120);
+    
+    // Draw a sample "7" digit
+    drawSampleDigit7(ctx);
+    
+    // Create pixel matrix visualization
+    createPixelMatrix();
+}
+
+// Create pixel matrix showing actual values
+function createPixelMatrix() {
+    const container = document.getElementById('inputMatrix');
+    if (!container) return;
+    
+    // Sample 8x8 representation of digit "7"
+    const digit7Matrix = [
+        [255, 255, 255, 255, 255, 255, 200, 100],
+        [0, 0, 0, 0, 0, 255, 180, 80],
+        [0, 0, 0, 0, 200, 160, 60, 0],
+        [0, 0, 0, 150, 120, 40, 0, 0],
+        [0, 0, 100, 80, 20, 0, 0, 0],
+        [0, 60, 40, 10, 0, 0, 0, 0],
+        [30, 20, 5, 0, 0, 0, 0, 0],
+        [15, 8, 0, 0, 0, 0, 0, 0]
+    ];
+    
+    container.innerHTML = '';
+    
+    digit7Matrix.forEach((row, i) => {
+        row.forEach((value, j) => {
+            const pixelDiv = document.createElement('div');
+            pixelDiv.className = 'pixel-value';
+            pixelDiv.textContent = value;
+            pixelDiv.style.backgroundColor = `rgb(${value}, ${value}, ${value})`;
+            pixelDiv.style.color = value > 127 ? '#000' : '#fff';
+            pixelDiv.setAttribute('data-value', value);
+            pixelDiv.setAttribute('data-row', i);
+            pixelDiv.setAttribute('data-col', j);
+            container.appendChild(pixelDiv);
+        });
+    });
+}
+
+// Create filter kernel visualization
+function createFilterKernel(container, size = 3) {
+    if (!container) return;
+    
+    // Edge detection filter examples
+    const filters = {
+        3: [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]], // 3x3 edge detection
+        5: [
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, 24, -1, -1],
+            [-1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1]
+        ], // 5x5 edge detection
+        7: [
+            [-1, -1, -1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1, -1, -1],
+            [-1, -1, -1, 48, -1, -1, -1],
+            [-1, -1, -1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1, -1, -1],
+            [-1, -1, -1, -1, -1, -1, -1]
+        ] // 7x7 edge detection
+    };
+    
+    const filter = filters[size] || filters[3];
+    
+    container.innerHTML = '';
+    container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    
+    filter.forEach(row => {
+        row.forEach(value => {
+            const kernelDiv = document.createElement('div');
+            kernelDiv.className = 'kernel-value';
+            kernelDiv.textContent = value;
+            kernelDiv.style.backgroundColor = value > 0 ? '#22c55e' : '#ef4444';
+            kernelDiv.style.color = 'white';
+            container.appendChild(kernelDiv);
+        });
+    });
+}
+
+// Create input patch visualization
+function createInputPatch(container, size = 3) {
+    if (!container) return;
+    
+    // Sample input patch from digit "7"
+    const patches = {
+        3: [[255, 255, 255], [0, 0, 255], [0, 200, 160]], // 3x3 patch
+        5: [
+            [255, 255, 255, 255, 200],
+            [0, 0, 0, 255, 180],
+            [0, 0, 200, 160, 60],
+            [0, 150, 120, 40, 0],
+            [100, 80, 20, 0, 0]
+        ], // 5x5 patch
+        7: [
+            [255, 255, 255, 255, 255, 200, 100],
+            [0, 0, 0, 0, 255, 180, 80],
+            [0, 0, 0, 200, 160, 60, 0],
+            [0, 0, 150, 120, 40, 0, 0],
+            [0, 100, 80, 20, 0, 0, 0],
+            [60, 40, 10, 0, 0, 0, 0],
+            [20, 5, 0, 0, 0, 0, 0]
+        ] // 7x7 patch
+    };
+    
+    const patch = patches[size] || patches[3];
+    
+    container.innerHTML = '';
+    container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    
+    patch.forEach(row => {
+        row.forEach(value => {
+            const patchDiv = document.createElement('div');
+            patchDiv.className = 'patch-value';
+            patchDiv.textContent = value;
+            patchDiv.style.backgroundColor = `rgb(${value}, ${value}, ${value})`;
+            patchDiv.style.color = value > 127 ? '#000' : '#fff';
+            container.appendChild(patchDiv);
+        });
+    });
+}
+
+// Create pooling visualization
+function createPoolingVisualization(poolSize = 2) {
+    const poolInput = document.getElementById('poolInput');
+    const poolOutput = document.getElementById('poolOutput');
+    
+    if (!poolInput || !poolOutput) return;
+    
+    // Sample feature map values for pooling
+    const inputValues = poolSize === 2 ? 
+        [[0.8, 0.3], [0.1, 0.9]] : // 2x2
+        poolSize === 3 ?
+        [[0.8, 0.3, 0.2], [0.1, 0.9, 0.4], [0.6, 0.2, 0.7]] : // 3x3
+        [[0.8, 0.3, 0.2, 0.1], [0.1, 0.9, 0.4, 0.3], [0.6, 0.2, 0.7, 0.5], [0.4, 0.1, 0.3, 0.8]]; // 4x4
+    
+    // Calculate max value for output
+    const maxValue = Math.max(...inputValues.flat());
+    
+    // Create input visualization
+    poolInput.innerHTML = '';
+    poolInput.style.gridTemplateColumns = `repeat(${poolSize}, 1fr)`;
+    
+    inputValues.forEach(row => {
+        row.forEach(value => {
+            const inputDiv = document.createElement('div');
+            inputDiv.className = 'pool-value';
+            inputDiv.textContent = value.toFixed(1);
+            
+            if (value === maxValue) {
+                inputDiv.classList.add('max');
+            }
+            
+            const intensity = Math.floor(value * 255);
+            inputDiv.style.backgroundColor = `rgb(${intensity}, ${intensity}, ${intensity})`;
+            inputDiv.style.color = value > 0.5 ? '#000' : '#fff';
+            poolInput.appendChild(inputDiv);
+        });
+    });
+    
+    // Create output visualization
+    poolOutput.innerHTML = '';
+    const outputDiv = document.createElement('div');
+    outputDiv.className = 'pool-value max';
+    outputDiv.textContent = maxValue.toFixed(1);
+    outputDiv.style.backgroundColor = '#06b6d4';
+    outputDiv.style.color = 'white';
+    poolOutput.appendChild(outputDiv);
+}
+
+// Update activation threshold visualization
+function updateActivationThreshold(threshold) {
+    // Update feature maps based on threshold
+    const featureMaps = document.querySelectorAll('.feature-map');
+    featureMaps.forEach((map, index) => {
+        const activation = Math.random(); // Simulate activation value
+        map.classList.toggle('active', activation > threshold);
+    });
+}
+
+// Draw a sample digit 7
+function drawSampleDigit7(ctx) {
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
+    ctx.beginPath();
+    // Top horizontal line (centered in 120x120 canvas)
+    ctx.moveTo(35, 35);
+    ctx.lineTo(85, 35);
+    // Diagonal line
+    ctx.lineTo(50, 85);
+    ctx.stroke();
+}
+
+// Create feature maps visualization
+function createFeatureMaps() {
+    createFeatureMapGrid('conv1FeatureMaps', 16);
+    createFeatureMapGrid('conv2FeatureMaps', 18); // 6x3 grid for Conv2
+}
+
+function createFeatureMapGrid(containerId, count) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+        const featureMap = document.createElement('div');
+        featureMap.className = 'feature-map';
+        featureMap.setAttribute('data-index', i);
+        container.appendChild(featureMap);
+    }
+}
+
+// Create prediction bars
+function createPredictionBars() {
+    const container = document.getElementById('predictionsViz');
+    if (!container) return;
+
+    const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    container.innerHTML = '';
+
+    digits.forEach(digit => {
+        const predictionBar = document.createElement('div');
+        predictionBar.className = 'prediction-bar';
+        predictionBar.innerHTML = `
+            <div class="prediction-label">${digit}</div>
+            <div class="prediction-value">
+                <div class="prediction-fill" data-digit="${digit}"></div>
+            </div>
+        `;
+        container.appendChild(predictionBar);
+    });
+}
+
+// Animation variables
+let pipelineAnimationState = {
+    isRunning: false,
+    currentStage: 0,
+    speed: 1,
+    timeoutIds: []
+};
+
+// Start CNN Pipeline Animation
+function startCNNPipelineAnimation() {
+    pipelineAnimationState.isRunning = true;
+    pipelineAnimationState.currentStage = 0;
+    
+    console.log('🎬 Starting CNN Pipeline Animation');
+    
+    // Reset all stages
+    resetPipelineStages();
+    
+    // Start the animation sequence
+    animatePipelineStage(0);
+}
+
+// Animate specific pipeline stage
+function animatePipelineStage(stageIndex) {
+    if (!pipelineAnimationState.isRunning) return;
+    
+    const stages = ['input', 'conv1', 'pool1', 'conv2', 'dense', 'output'];
+    const stageName = stages[stageIndex];
+    
+    console.log(`🎯 Animating stage ${stageIndex}: ${stageName}`);
+    
+    // Update stage progress indicator
+    updateStageProgressIndicator(stageIndex);
+    
+    // Activate current pipeline stage
+    activatePipelineStage(stageIndex);
+    
+    // Stage-specific animations
+    switch (stageIndex) {
+        case 0: // Input
+            animateInputStage();
+            break;
+        case 1: // Conv1
+            animateConv1Stage();
+            break;
+        case 2: // Pool1
+            animatePool1Stage();
+            break;
+        case 3: // Conv2
+            animateConv2Stage();
+            break;
+        case 4: // Dense
+            animateDenseStage();
+            break;
+        case 5: // Output
+            animateOutputStage();
+            break;
+    }
+    
+    // Update training metrics
+    updateTrainingMetrics(stageIndex);
+    
+    // Schedule next stage
+    const delay = 2000 / pipelineAnimationState.speed;
+    const timeoutId = setTimeout(() => {
+        if (stageIndex < stages.length - 1) {
+            animatePipelineStage(stageIndex + 1);
+        } else {
+            // Animation complete, restart after delay
+            const restartTimeout = setTimeout(() => {
+                if (pipelineAnimationState.isRunning) {
+                    startCNNPipelineAnimation();
+                }
+            }, 3000 / pipelineAnimationState.speed);
+            pipelineAnimationState.timeoutIds.push(restartTimeout);
+        }
+    }, delay);
+    
+    pipelineAnimationState.timeoutIds.push(timeoutId);
+}
+
+// Update stage progress indicator
+function updateStageProgressIndicator(activeIndex) {
+    const stages = document.querySelectorAll('.stage-progress-indicator .stage');
+    stages.forEach((stage, index) => {
+        stage.classList.toggle('active', index === activeIndex);
+    });
+}
+
+// Activate pipeline stage
+function activatePipelineStage(stageIndex) {
+    const stages = document.querySelectorAll('.pipeline-stage');
+    stages.forEach((stage, index) => {
+        stage.classList.toggle('active', index === stageIndex);
+    });
+    
+    // Animate data flow
+    if (stageIndex > 0) {
+        const flowElement = document.getElementById(`flow${stageIndex}`);
+        if (flowElement) {
+            flowElement.classList.add('active');
+        }
+    }
+}
+
+// Stage-specific animations
+function animateInputStage() {
+    const inputCanvas = document.getElementById('inputCanvas');
+    if (inputCanvas) {
+        inputCanvas.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            inputCanvas.style.transform = 'scale(1)';
+        }, 500);
+    }
+    
+    // Animate pixel matrix processing
+    const pixelValues = document.querySelectorAll('.pixel-value');
+    pixelValues.forEach((pixel, index) => {
+        setTimeout(() => {
+            pixel.classList.add('processing');
+            setTimeout(() => {
+                pixel.classList.remove('processing');
+                pixel.classList.add('active');
+            }, 300);
+        }, index * 50);
+    });
+    
+    // Update min/max values
+    const inputMinMax = document.getElementById('inputMinMax');
+    if (inputMinMax) {
+        setTimeout(() => {
+            inputMinMax.textContent = '0/255';
+        }, 1000);
+    }
+}
+
+function animateConv1Stage() {
+    // Animate convolution operation
+    const filterKernel = document.getElementById('filterKernel');
+    const inputPatch = document.getElementById('inputPatch');
+    
+    if (filterKernel) {
+        filterKernel.classList.add('active');
+        setTimeout(() => {
+            filterKernel.classList.remove('active');
+        }, 1000);
+    }
+    
+    if (inputPatch) {
+        setTimeout(() => {
+            inputPatch.classList.add('active');
+            setTimeout(() => {
+                inputPatch.classList.remove('active');
+            }, 1000);
+        }, 500);
+    }
+    
+    // Animate feature maps
+    const featureMaps = document.querySelectorAll('#conv1FeatureMaps .feature-map');
+    const threshold = parseFloat(document.getElementById('activationThreshold')?.value || 0.5);
+    
+    featureMaps.forEach((map, index) => {
+        setTimeout(() => {
+            const activation = Math.random();
+            if (activation > threshold) {
+                map.classList.add('active');
+            }
+        }, index * 50);
+    });
+}
+
+function animatePool1Stage() {
+    // Animate pooling operation
+    const poolInputValues = document.querySelectorAll('#poolInput .pool-value');
+    const poolOutputValue = document.querySelector('#poolOutput .pool-value');
+    
+    // Animate input values being processed
+    poolInputValues.forEach((value, index) => {
+        setTimeout(() => {
+            value.classList.add('processing');
+            setTimeout(() => {
+                value.classList.remove('processing');
+            }, 500);
+        }, index * 200);
+    });
+    
+    // Animate output result
+    if (poolOutputValue) {
+        setTimeout(() => {
+            poolOutputValue.style.transform = 'scale(1.2)';
+            poolOutputValue.style.boxShadow = '0 0 20px rgba(6, 182, 212, 0.6)';
+            setTimeout(() => {
+                poolOutputValue.style.transform = 'scale(1)';
+                poolOutputValue.style.boxShadow = '';
+            }, 500);
+        }, 800);
+    }
+}
+
+function animateConv2Stage() {
+    // Animate convolution operation with complex features
+    const conv2FilterKernel = document.getElementById('conv2FilterKernel');
+    const conv2InputPatch = document.getElementById('conv2InputPatch');
+    
+    if (conv2FilterKernel) {
+        conv2FilterKernel.classList.add('active');
+        setTimeout(() => {
+            conv2FilterKernel.classList.remove('active');
+        }, 1000);
+    }
+    
+    if (conv2InputPatch) {
+        setTimeout(() => {
+            conv2InputPatch.classList.add('active');
+            setTimeout(() => {
+                conv2InputPatch.classList.remove('active');
+            }, 1000);
+        }, 500);
+    }
+    
+    // Animate feature maps with complex patterns
+    const featureMaps = document.querySelectorAll('#conv2FeatureMaps .feature-map');
+    const threshold = parseFloat(document.getElementById('activationThreshold')?.value || 0.5);
+    
+    featureMaps.forEach((map, index) => {
+        setTimeout(() => {
+            const activation = Math.random();
+            if (activation > threshold) {
+                map.classList.add('complex'); // Use complex style instead of active
+            }
+            // Add feature map number
+            map.textContent = index + 1;
+        }, index * 40);
+    });
+}
+
+function animateDenseStage() {
+    const denseViz = document.getElementById('denseViz');
+    if (denseViz) {
+        denseViz.innerHTML = '<div style="color: var(--primary-color); font-weight: 600;">128 neurons</div>';
+        denseViz.style.background = 'linear-gradient(45deg, var(--primary-color), var(--secondary-color))';
+        setTimeout(() => {
+            denseViz.style.background = 'var(--gradient-surface)';
+        }, 1000);
+    }
+}
+
+function animateOutputStage() {
+    // Animate prediction bars with sample probabilities
+    const samplePredictions = [0.05, 0.15, 0.08, 0.12, 0.03, 0.02, 0.01, 0.52, 0.01, 0.01]; // Favoring digit 7
+    
+    samplePredictions.forEach((probability, digit) => {
+        const fill = document.querySelector(`[data-digit="${digit}"]`);
+        if (fill) {
+            setTimeout(() => {
+                fill.style.width = `${probability * 100}%`;
+            }, digit * 100);
+        }
+    });
+    
+    // Update confidence value
+    const confidenceValue = document.getElementById('confidenceValue');
+    if (confidenceValue) {
+        setTimeout(() => {
+            confidenceValue.textContent = '52%';
+        }, 1000);
+    }
+}
+
+// Update training metrics
+function updateTrainingMetrics(stageIndex) {
+    const epoch = Math.floor(Math.random() * 10) + 1;
+    const accuracy = Math.min(50 + stageIndex * 8 + Math.random() * 10, 98);
+    const loss = Math.max(2.5 - stageIndex * 0.4 - Math.random() * 0.3, 0.1);
+    
+    const currentEpoch = document.getElementById('currentEpoch');
+    const currentAccuracy = document.getElementById('currentAccuracy');
+    const currentLoss = document.getElementById('currentLoss');
+    const trainingSpeed = document.getElementById('trainingSpeed');
+    const progressFill = document.getElementById('trainingProgressFill');
+    
+    if (currentEpoch) currentEpoch.textContent = epoch;
+    if (currentAccuracy) currentAccuracy.textContent = `${accuracy.toFixed(1)}%`;
+    if (currentLoss) currentLoss.textContent = loss.toFixed(3);
+    if (trainingSpeed) trainingSpeed.textContent = `${pipelineAnimationState.speed}x`;
+    
+    if (progressFill) {
+        const progress = ((stageIndex + 1) / 6) * 100;
+        progressFill.style.width = `${progress}%`;
+    }
+}
+
+// Reset pipeline stages
+function resetPipelineStages() {
+    // Clear active states
+    document.querySelectorAll('.pipeline-stage').forEach(stage => {
+        stage.classList.remove('active');
+    });
+    
+    document.querySelectorAll('.stage').forEach(stage => {
+        stage.classList.remove('active');
+    });
+    
+    document.querySelectorAll('.data-flow').forEach(flow => {
+        flow.classList.remove('active');
+    });
+    
+    // Reset feature maps
+    document.querySelectorAll('.feature-map').forEach(map => {
+        map.classList.remove('active');
+    });
+    
+    // Reset prediction bars
+    document.querySelectorAll('.prediction-fill').forEach(fill => {
+        fill.style.width = '0%';
+    });
+    
+    // Reset metrics
+    const currentEpoch = document.getElementById('currentEpoch');
+    const currentAccuracy = document.getElementById('currentAccuracy');
+    const currentLoss = document.getElementById('currentLoss');
+    const confidenceValue = document.getElementById('confidenceValue');
+    const progressFill = document.getElementById('trainingProgressFill');
+    
+    if (currentEpoch) currentEpoch.textContent = '0';
+    if (currentAccuracy) currentAccuracy.textContent = '0%';
+    if (currentLoss) currentLoss.textContent = '--';
+    if (confidenceValue) confidenceValue.textContent = '--';
+    if (progressFill) progressFill.style.width = '0%';
+    
+    // Activate first stage
+    const firstStage = document.querySelector('.stage[data-stage="input"]');
+    if (firstStage) firstStage.classList.add('active');
+}
+
+// Pause animation
+function pauseCNNPipelineAnimation() {
+    pipelineAnimationState.isRunning = false;
+    
+    // Clear all timeouts
+    pipelineAnimationState.timeoutIds.forEach(id => clearTimeout(id));
+    pipelineAnimationState.timeoutIds = [];
+    
+    console.log('⏸️ CNN Pipeline Animation Paused');
+}
+
+// Reset animation
+function resetCNNPipelineAnimation() {
+    pauseCNNPipelineAnimation();
+    resetPipelineStages();
+    
+    console.log('🔄 CNN Pipeline Animation Reset');
+}
+
+// Update animation speed
+function updateAnimationSpeed(newSpeed) {
+    pipelineAnimationState.speed = newSpeed;
+    console.log(`⚡ Animation speed updated to ${newSpeed}x`);
+}
+
+// Create Conv2 technical visualizations
+function createConv2FilterKernel() {
+    const conv2FilterKernel = document.getElementById('conv2FilterKernel');
+    if (!conv2FilterKernel) return;
+    
+    conv2FilterKernel.innerHTML = '';
+    
+    // Complex feature detection filter (e.g., vertical edge detector with emphasis)
+    const complexFilter = [
+        [-1, 0, 1],
+        [-2, 0, 2],
+        [-1, 0, 1]
+    ];
+    
+    complexFilter.forEach(row => {
+        row.forEach(value => {
+            const cell = document.createElement('div');
+            cell.className = 'kernel-value';
+            cell.textContent = value;
+            // Color coding for filter values
+            if (value > 0) {
+                cell.style.backgroundColor = '#e8f5e8';
+                cell.style.color = '#2d5a2d';
+            } else if (value < 0) {
+                cell.style.backgroundColor = '#ffe8e8';
+                cell.style.color = '#5a2d2d';
+            } else {
+                cell.style.backgroundColor = '#f0f0f0';
+                cell.style.color = '#666';
+            }
+            conv2FilterKernel.appendChild(cell);
+        });
+    });
+}
+
+function createConv2InputPatch() {
+    const conv2InputPatch = document.getElementById('conv2InputPatch');
+    if (!conv2InputPatch) return;
+    
+    conv2InputPatch.innerHTML = '';
+    
+    // Sample pooled feature values (from Pool1 output)
+    const pooledValues = [
+        [0.8, 0.3, 0.7],
+        [0.9, 0.5, 0.6],
+        [0.4, 0.8, 0.2]
+    ];
+    
+    pooledValues.forEach(row => {
+        row.forEach(value => {
+            const cell = document.createElement('div');
+            cell.className = 'patch-value';
+            cell.textContent = value.toFixed(1);
+            
+            // Color based on activation strength
+            const intensity = Math.floor(value * 255);
+            const colorValue = Math.max(100, intensity); // Ensure visibility
+            cell.style.backgroundColor = `rgb(${colorValue}, ${colorValue}, 255)`;
+            cell.style.color = value > 0.5 ? '#000' : '#fff';
+            conv2InputPatch.appendChild(cell);
+        });
+    });
+}
+
+// Initialize Complete CNN Visualization when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Add to existing initialization
+    if (document.querySelector('.cnn-complete-demo')) {
+        initializeCompleteCNNVisualization();
+    }
+});

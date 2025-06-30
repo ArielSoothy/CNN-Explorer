@@ -77,207 +77,357 @@
         </div>
     </section>
 
-    <!-- Overview Section -->
-    <section id="overview" class="section overview-intro">
+    <!-- Interactive CNN Complete Visualization -->
+    <section id="overview" class="section cnn-complete-demo">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">How Do Computers See Numbers?</h2>
+                <h2 class="section-title">
+                    <i class="fas fa-brain"></i>
+                    Complete CNN Journey: From Pixels to Predictions
+                </h2>
                 <p class="section-description">
-                    Discover the fascinating journey of how CNNs transform handwritten digits into predictions. 
-                    Explore these important concepts that form the foundation of computer vision.
+                    Watch a complete CNN process a handwritten digit from start to finish! Control 4 key hyperparameters 
+                    and see how they affect the entire learning process in real-time. This is AI learning simplified!
                 </p>
             </div>
-            
-            <!-- Learning Progress Indicator -->
-            <div class="learning-progress">
-                <div class="progress-header">
-                    <h3>Core CNN Concepts</h3>
-                    <p>Essential topics for understanding computer vision</p>
-                </div>
-                <div class="progress-steps">
-                    <div class="progress-step" data-step="1">
-                        <div class="step-circle">1</div>
-                        <span>Image Processing</span>
-                    </div>
-                    <div class="progress-line"></div>
-                    <div class="progress-step" data-step="2">
-                        <div class="step-circle">2</div>
-                        <span>Feature Detection</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Image Processing Topic -->
-    <section id="step-1" class="section learning-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-badge">
-                    <span class="step-number">01</span>
-                    <span class="step-label">Core Topic</span>
+            <!-- Hyperparameter Controls -->
+            <div class="hyperparameter-controls">
+                <h3>🎛️ Control the AI Learning Process</h3>
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <label for="filterSize">Filter Size</label>
+                        <input type="range" id="filterSize" min="3" max="7" step="2" value="3">
+                        <span class="control-value" id="filterSizeValue">3×3</span>
+                        <p class="control-description">Size of convolution filters - affects feature detection area</p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="numFilters">Number of Filters</label>
+                        <input type="range" id="numFilters" min="8" max="64" step="8" value="32">
+                        <span class="control-value" id="numFiltersValue">32</span>
+                        <p class="control-description">How many different patterns to detect simultaneously</p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="activationThreshold">Activation Threshold</label>
+                        <input type="range" id="activationThreshold" min="0.1" max="0.9" step="0.1" value="0.5">
+                        <span class="control-value" id="activationThresholdValue">0.5</span>
+                        <p class="control-description">Minimum value for neurons to "fire" - affects which features light up</p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="poolingSize">Pooling Size</label>
+                        <input type="range" id="poolingSize" min="2" max="4" step="1" value="2">
+                        <span class="control-value" id="poolingSizeValue">2×2</span>
+                        <p class="control-description">How much to reduce image size - affects information compression</p>
+                    </div>
                 </div>
-                <h2 class="step-title">Image Processing: From Visual to Numerical</h2>
-                <p class="step-description">
-                    Understanding how images transform into numbers that computers can understand.
-                    This fundamental concept enables all computer vision applications.
-                </p>
             </div>
-            
-            <div class="interactive-step active" id="step-1-content">
-                <div class="step-content">
-                    <div class="step-explanation">
-                        <h3>Understanding the Process</h3>
-                        <div class="explanation-grid">
-                            <div class="concept-card">
-                                <i class="fas fa-th"></i>
-                                <h4>20×20 Grid</h4>
-                                <p>Each handwritten digit is processed as a 20×20 pixel grid</p>
+
+            <!-- Complete CNN Pipeline Visualization -->
+            <div class="cnn-pipeline-container">
+                <div class="pipeline-header">
+                    <h3>🔄 CNN Processing Pipeline</h3>
+                    <div class="pipeline-controls">
+                        <button class="control-btn primary" id="startCNNPipeline">
+                            <i class="fas fa-play"></i> Start CNN Process
+                        </button>
+                        <button class="control-btn" id="pauseCNNPipeline" style="display: none;">
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button class="control-btn" id="resetCNNPipeline">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="control-btn" id="speedToggle">
+                            <i class="fas fa-tachometer-alt"></i> Speed: 1x
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stage Progress Indicator -->
+                <div class="stage-progress-indicator">
+                    <div class="progress-stages">
+                        <div class="stage active" data-stage="input">
+                            <div class="stage-icon"><i class="fas fa-image"></i></div>
+                            <span>Input</span>
+                        </div>
+                        <div class="stage" data-stage="conv1">
+                            <div class="stage-icon"><i class="fas fa-th"></i></div>
+                            <span>Conv 1</span>
+                        </div>
+                        <div class="stage" data-stage="pool1">
+                            <div class="stage-icon"><i class="fas fa-compress"></i></div>
+                            <span>Pool 1</span>
+                        </div>
+                        <div class="stage" data-stage="conv2">
+                            <div class="stage-icon"><i class="fas fa-layer-group"></i></div>
+                            <span>Conv 2</span>
+                        </div>
+                        <div class="stage" data-stage="dense">
+                            <div class="stage-icon"><i class="fas fa-project-diagram"></i></div>
+                            <span>Dense</span>
+                        </div>
+                        <div class="stage" data-stage="output">
+                            <div class="stage-icon"><i class="fas fa-bullseye"></i></div>
+                            <span>Output</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pipeline Visualization -->
+                <div class="pipeline-visualization">
+                                         <!-- Stage 1: Input -->
+                    <div class="pipeline-stage" id="stage-input">
+                        <h4>Input Image</h4>
+                        <div class="stage-content">
+                            <canvas id="inputCanvas" width="120" height="120"></canvas>
+                            <div class="pixel-matrix" id="inputMatrix">
+                                <!-- Will show actual pixel values -->
                             </div>
-                            <div class="concept-card">
-                                <i class="fas fa-palette"></i>
-                                <h4>Pixel Values</h4>
-                                <p>Each pixel gets a value from 0 (black) to 255 (white)</p>
+                            <div class="stage-info">
+                                <div class="info-item">
+                                    <span class="label">Size:</span>
+                                    <span class="value">28×28</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Min/Max:</span>
+                                    <span class="value" id="inputMinMax">0/255</span>
+                                </div>
                             </div>
-                            <div class="concept-card">
-                                <i class="fas fa-adjust"></i>
-                                <h4>Grayscale</h4>
-                                <p>Colors are converted to shades of gray for simplicity</p>
+                        </div>
+                    </div>
+
+                    <!-- Flow Arrow -->
+                    <div class="pipeline-arrow">
+                        <div class="arrow-line">
+                            <div class="data-flow" id="flow1"></div>
+                        </div>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                                         <!-- Stage 2: Conv1 -->
+                    <div class="pipeline-stage" id="stage-conv1">
+                        <h4>Convolution 1</h4>
+                        <div class="stage-content">
+                            <div class="conv-filter-display" id="conv1FilterDisplay">
+                                <div class="filter-kernel" id="filterKernel">
+                                    <!-- Will show actual filter values -->
+                                </div>
+                                <div class="conv-operation">⊛</div>
+                                <div class="input-patch" id="inputPatch">
+                                    <!-- Will show input patch being convolved -->
+                                </div>
                             </div>
-                            <div class="concept-card">
-                                <i class="fas fa-calculator"></i>
-                                <h4>Matrix</h4>
-                                <p>The computer sees this as a mathematical matrix of 400 numbers</p>
+                            <div class="feature-maps-grid" id="conv1FeatureMaps">
+                                <!-- Feature maps will be generated here -->
                             </div>
+                            <div class="stage-info">
+                                <div class="info-item">
+                                    <span class="label">Filter:</span>
+                                    <span class="value" id="conv1FilterSize">3×3</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Output:</span>
+                                    <span class="value" id="conv1Output">26×26×32</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flow Arrow -->
+                    <div class="pipeline-arrow">
+                        <div class="arrow-line">
+                            <div class="data-flow" id="flow2"></div>
+                        </div>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                                         <!-- Stage 3: Pool1 -->
+                    <div class="pipeline-stage" id="stage-pool1">
+                        <h4>Max Pooling 1</h4>
+                        <div class="stage-content">
+                            <div class="pooling-operation" id="poolingOperation">
+                                <div class="pool-input" id="poolInput">
+                                    <!-- 4x4 input patch -->
+                                </div>
+                                <div class="pool-arrow">→</div>
+                                <div class="pool-output" id="poolOutput">
+                                    <!-- 2x2 output -->
+                                </div>
+                            </div>
+                            <div class="pooling-formula">max(2×2)</div>
+                            <div class="stage-info">
+                                <div class="info-item">
+                                    <span class="label">Window:</span>
+                                    <span class="value" id="poolingWindow">2×2</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Output:</span>
+                                    <span class="value" id="pool1Output">13×13×32</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flow Arrow -->
+                    <div class="pipeline-arrow">
+                        <div class="arrow-line">
+                            <div class="data-flow" id="flow3"></div>
+                        </div>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                    <!-- Stage 4: Conv2 -->
+                    <div class="pipeline-stage" id="stage-conv2">
+                        <h4>Convolution 2</h4>
+                        <div class="stage-content">
+                            <div class="conv-filter-display" id="conv2FilterDisplay">
+                                <div class="filter-kernel" id="conv2FilterKernel">
+                                    <!-- Will show complex feature filter -->
+                                </div>
+                                <div class="conv-operation">⊛</div>
+                                <div class="input-patch" id="conv2InputPatch">
+                                    <!-- Will show pooled input patch -->
+                                </div>
+                            </div>
+                            <div class="feature-maps-grid smaller" id="conv2FeatureMaps">
+                                <!-- Feature maps will be generated here -->
+                            </div>
+                            <div class="stage-info">
+                                <div class="info-item">
+                                    <span class="label">Filter:</span>
+                                    <span class="value" id="conv2FilterSize">3×3</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Features:</span>
+                                    <span class="value">Complex</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flow Arrow -->
+                    <div class="pipeline-arrow">
+                        <div class="arrow-line">
+                            <div class="data-flow" id="flow4"></div>
+                        </div>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                    <!-- Stage 5: Dense -->
+                    <div class="pipeline-stage" id="stage-dense">
+                        <h4>Dense Layer</h4>
+                        <div class="stage-content">
+                            <div class="dense-visualization" id="denseViz">
+                                <!-- Dense layer visualization -->
+                            </div>
+                            <div class="stage-info">
+                                <div class="info-item">
+                                    <span class="label">Neurons:</span>
+                                    <span class="value">128</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Connections:</span>
+                                    <span class="value">~98K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flow Arrow -->
+                    <div class="pipeline-arrow">
+                        <div class="arrow-line">
+                            <div class="data-flow" id="flow5"></div>
+                        </div>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                    <!-- Stage 6: Output -->
+                    <div class="pipeline-stage" id="stage-output">
+                        <h4>Predictions</h4>
+                        <div class="stage-content">
+                            <div class="predictions-visualization" id="predictionsViz">
+                                <!-- Predictions bars -->
+                            </div>
+                            <div class="stage-info">
+                                <div class="info-item">
+                                    <span class="label">Classes:</span>
+                                    <span class="value">10 digits</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Confidence:</span>
+                                    <span class="value" id="confidenceValue">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Progress -->
+                <div class="training-progress">
+                    <h4>🎯 Training Progress</h4>
+                    <div class="progress-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Current Epoch:</span>
+                            <span class="metric-value" id="currentEpoch">0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Accuracy:</span>
+                            <span class="metric-value" id="currentAccuracy">0%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Loss:</span>
+                            <span class="metric-value" id="currentLoss">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Speed:</span>
+                            <span class="metric-value" id="trainingSpeed">1x</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="trainingProgressFill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Impact Explanation -->
+            <div class="learning-impact">
+                <h3>🧠 How Your Settings Affect Learning</h3>
+                <div class="impact-grid">
+                    <div class="impact-card" id="filterSizeImpact">
+                        <h4>Filter Size Impact</h4>
+                        <p>Larger filters detect bigger features but reduce spatial resolution. Smaller filters capture fine details.</p>
+                        <div class="impact-indicator">
+                            <span class="indicator-label">Visual Effect:</span>
+                            <span class="indicator-value" id="filterSizeEffect">Fine Details</span>
                         </div>
                     </div>
                     
-                    <div class="step-visualization compact">
-                        <div class="pixel-conversion-container">
-                            <div class="visual-section">
-                                <h4>What Humans See</h4>
-                                <div class="pixel-grid" id="pixelGrid">
-                                    <!-- Pixels will be generated by JavaScript -->
-                                </div>
-                                <p class="section-label">Handwritten Digit "7" (Visual)</p>
-                            </div>
-                            
-                            <div class="conversion-arrow">
-                                <i class="fas fa-arrow-right"></i>
-                                <span>Converts to</span>
-                            </div>
-                            
-                            <div class="numerical-section">
-                                <h4>What Computer Sees</h4>
-                                <div class="number-matrix" id="numberMatrix">
-                                    <!-- Numbers will be generated by JavaScript -->
-                                </div>
-                                <p class="section-label">20×20 Matrix of Numbers</p>
-                            </div>
-                        </div>
-                        
-                        <div class="interactive-controls">
-                            <div class="pixel-info">
-                                <div class="info-item">
-                                    <span class="info-label">Position:</span>
-                                    <span id="currentPosition">Row 0, Col 0</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Pixel Value:</span>
-                                    <span id="currentPixel">0-255</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Progress:</span>
-                                    <span id="progressCounter">0/400</span>
-                                </div>
-                            </div>
-                            <div class="step-controls">
-                                <button class="control-btn" id="playStep1">
-                                    <i class="fas fa-play"></i> Start Animation
-                                </button>
-                                <button class="control-btn" id="pauseStep1" style="display: none;">
-                                    <i class="fas fa-pause"></i> Pause
-                                </button>
-                                <button class="control-btn" id="resetStep1">
-                                    <i class="fas fa-redo"></i> Reset
-                                </button>
-                            </div>
+                    <div class="impact-card" id="filtersImpact">
+                        <h4>Number of Filters Impact</h4>
+                        <p>More filters = can detect more different patterns simultaneously. Watch the feature maps multiply!</p>
+                        <div class="impact-indicator">
+                            <span class="indicator-label">Visual Effect:</span>
+                            <span class="indicator-value" id="filtersEffect">Moderate</span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Feature Detection Topic -->
-    <section id="step-2" class="section learning-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-badge">
-                    <span class="step-number">02</span>
-                    <span class="step-label">Core Topic</span>
-                </div>
-                <h2 class="step-title">Feature Detection: Finding Patterns</h2>
-                <p class="step-description">
-                    Explore how CNNs use specialized filters to detect important patterns like edges and lines.
-                    This is where the magic of pattern recognition begins.
-                </p>
-            </div>
-            
-            <div class="interactive-step" id="step-2-content">
-                <div class="step-content">
-                    <div class="step-visualization">
-                        <div class="convolution-container">
-                            <div class="original-image">
-                                <h4>Original Image</h4>
-                                <div class="image-matrix" id="originalMatrix"></div>
-                            </div>
-                            <div class="filter-section">
-                                <div class="conversion-arrow">
-                                    <i class="fas fa-arrow-down"></i>
-                                    <span>Convolves with</span>
-                                </div>
-                                <h4>Convolution Filter</h4>
-                                <div class="filter-selector">
-                                    <button class="filter-btn active" data-filter="edge">Edge Detection</button>
-                                    <button class="filter-btn" data-filter="vertical">Vertical Lines</button>
-                                    <button class="filter-btn" data-filter="horizontal">Horizontal Lines</button>
-                                </div>
-                                <div class="filter-matrix" id="filterMatrix"></div>
-                                <div class="conversion-arrow">
-                                    <i class="fas fa-arrow-down"></i>
-                                    <span>Produces</span>
-                                </div>
-                            </div>
-                            <div class="feature-map">
-                                <h4>Feature Map</h4>
-                                <div class="result-matrix" id="resultMatrix"></div>
-                                <p class="section-label">20×20 Output (from 28×28 input)</p>
-                            </div>
-                        </div>
-                        <div class="step-controls">
-                            <button class="control-btn" id="playStep2">
-                                <i class="fas fa-play"></i> Start Convolution
-                            </button>
-                            <button class="control-btn" id="pauseStep2" style="display: none;">
-                                <i class="fas fa-pause"></i> Pause
-                            </button>
-                            <button class="control-btn" id="resetStep2">
-                                <i class="fas fa-redo"></i> Reset
-                            </button>
+                    
+                    <div class="impact-card" id="activationImpact">
+                        <h4>Activation Threshold Impact</h4>
+                        <p>Higher threshold = fewer neurons fire, more selective. Lower threshold = more neurons active.</p>
+                        <div class="impact-indicator">
+                            <span class="indicator-label">Visual Effect:</span>
+                            <span class="indicator-value" id="activationEffect">Balanced</span>
                         </div>
                     </div>
-                    <div class="step-explanation">
-                        <h3>Understanding Convolution</h3>
-                        <ul class="explanation-list">
-                            <li><strong>Convolution:</strong> A filter slides across the image, multiplying and summing values</li>
-                            <li><strong>Multiple Filters:</strong> Different filters detect different features (edges, curves, etc.)</li>
-                            <li><strong>Feature Maps:</strong> Each filter creates a feature map highlighting specific patterns</li>
-                            <li><strong>Learning:</strong> The network learns what filters work best for digit recognition</li>
-                        </ul>
-                        <div class="interaction-hint">
-                            <i class="fas fa-mouse-pointer"></i>
-                            <span>Try different filters to see how they detect various features!</span>
+                    
+                    <div class="impact-card" id="poolingImpact">
+                        <h4>Pooling Size Impact</h4>
+                        <p>Larger pooling = more compression and faster processing but loses more spatial information.</p>
+                        <div class="impact-indicator">
+                            <span class="indicator-label">Visual Effect:</span>
+                            <span class="indicator-value" id="poolingEffect">Moderate</span>
                         </div>
                     </div>
                 </div>
