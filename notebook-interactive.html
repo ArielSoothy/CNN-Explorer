@@ -877,6 +877,126 @@
             }
         }
 
+        /* Navigation Logo Styling - Match Main Website */
+        .navbar .nav-container .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-decoration: none;
+        }
+        .navbar .nav-container .nav-logo i {
+            color: #2563eb !important;
+            font-size: 1.5rem !important;
+        }
+        .navbar .nav-container .nav-logo svg {
+            color: #2563eb !important;
+            fill: #2563eb !important;
+            font-size: 1.5rem !important;
+        }
+        .navbar .nav-container .nav-logo span {
+            color: #1e293b;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        /* Additional specificity to ensure brain icon is blue */
+        body .navbar .nav-container .nav-logo i {
+            color: #2563eb !important;
+        }
+        body .navbar .nav-container .nav-logo svg {
+            color: #2563eb !important;
+            fill: #2563eb !important;
+        }
+        .nav-logo i {
+            color: #2563eb !important;
+        }
+        .nav-logo svg {
+            color: #2563eb !important;
+            fill: #2563eb !important;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.15s ease-in-out;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .nav-link:hover {
+            color: #2563eb;
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .nav-link.active {
+            color: #2563eb;
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger .bar {
+            width: 25px;
+            height: 3px;
+            background: #1e293b;
+            transition: all 0.15s ease-in-out;
+            border-radius: 2px;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-link {
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+                border-radius: 0;
+            }
+        }
+
         /* Landscape phones */
         @media (max-width: 896px) and (orientation: landscape) {
             .project-header {
