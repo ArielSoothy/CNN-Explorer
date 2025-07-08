@@ -146,6 +146,14 @@ p {
     font-size: var(--font-size-2xl);
 }
 
+.nav-logo-img {
+    height: 240px;
+    width: 240px;
+    object-fit: contain;
+    margin-right: 0.25rem;
+    margin-top: 10px;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
@@ -682,54 +690,7 @@ p {
     font-weight: 600;
 }
 
-/* Footer */
-.footer {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    color: #e2e8f0;
-    padding: 3rem 0 2rem;
-    text-align: center;
-}
 
-.footer-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.footer-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.footer-logo i {
-    color: var(--primary-color);
-}
-
-.footer p {
-    margin: 0 0 1.5rem 0;
-    opacity: 0.8;
-}
-
-.footer-links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.footer-links a {
-    color: #e2e8f0;
-    font-size: 1.5rem;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: var(--primary-color);
-}
 
 /* 3D CNN Animation Demo */
 .cnn-3d-demo-container {
