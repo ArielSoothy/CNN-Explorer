@@ -26,8 +26,8 @@ class MNISTPredictor {
         // - 'https://storage.googleapis.com/tfjs-models/savedmodel/mnist/model.json' (FAILED - retry)
         // - 'https://storage.googleapis.com/learnjs-data/model-builder/mnist/model.json' (FAILED)
         // - 'https://storage.googleapis.com/tfjs-models/tfjs/mnist_transfer_cnn_v1/model.json' (WORKING but only 1-4)
-        // CURRENT MODEL: Google TensorFlow.js MNIST Workshop (different path - full 10 classes)
-        const modelUrl = 'https://raw.githubusercontent.com/google/tfjs-mnist-workshop/master/model.json';
+        // CURRENT MODEL: Google TensorFlow.js MNIST Transfer CNN (digits 1-4 only)
+        const modelUrl = 'https://storage.googleapis.com/tfjs-models/tfjs/mnist_transfer_cnn_v1/model.json';
         console.log(`🧠 Loading real AI model from: ${modelUrl}`);
         this.modelStatus = 'loading';
         this.loadStatus = 'Loading Real AI Model...';
