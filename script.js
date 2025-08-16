@@ -620,7 +620,7 @@ window.addEventListener('load', function() {
 
 // Console welcome message
 console.log(`
-🧠 Welcome to ArtificialGate CNN Explorer!
+🧠 Welcome to CNN Explorer!
 🎨 Draw a digit and watch our neural network analyze it
 📚 Learn how CNNs work step by step
 🚀 Built with modern web technologies

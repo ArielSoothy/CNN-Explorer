@@ -1,6 +1,0 @@
-Task: Develop and evaluate a Convolutional Neural Network (CNN) model to classify handwritten digits from the MNIST dataset. Create a notebook that performs the following steps to achieve this:
-1. Load and preprocess the MNIST dataset.
-2. Define a CNN architecture using TensorFlow/Keras.
-3. Compile and train the CNN model on the training data.
-4. Evaluate the trained model on the test data.
-5. Visualize examples of predictions, including both correct and incorrect classifications.
