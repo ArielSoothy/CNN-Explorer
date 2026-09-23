@@ -235,6 +235,15 @@ p {
     z-index: 1;
 }
 
+@media (max-width: 768px) {
+    /* Two equal grid columns never stacked on phones, so .hero's
+       overflow:hidden was clipping the whole hero-visual column
+       (the floating feature cards) off the right edge of the screen. */
+    .hero-container {
+        grid-template-columns: 1fr;
+    }
+}
+
 .hero-content {
     animation: slideInLeft 0.8s ease-out;
 }
@@ -671,6 +680,32 @@ p {
     font-size: var(--font-size-2xl);
     margin-bottom: var(--spacing-md);
     color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    /* Stack the draw-demo grid (canvas + prediction/debug panels) to one
+       column and shrink the card padding so the fixed 280px drawingCanvas
+       (not CSS-scaled, to keep touch coordinates correct) still fits. */
+    .demo-container {
+        grid-template-columns: 1fr;
+    }
+
+    .demo-section,
+    .prediction-section {
+        padding: var(--spacing-md);
+    }
+
+    /* The debug/model-info row after #predictionResults is inline-styled
+       (display:flex; gap:2rem) in index.html; stack it too, and neutralize
+       .model-info-compact's inline flex: 0 0 300px so it doesn't force a
+       fixed-width column. */
+    #predictionResults + div {
+        flex-direction: column;
+    }
+
+    .model-info-compact {
+        flex: 1 1 auto !important;
+    }
 }
 
 .model-info {
