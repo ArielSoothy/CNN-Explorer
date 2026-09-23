@@ -1,10 +1,14 @@
 # CNN Explorer 🧠✨
 
+**Live demo:** https://arielsoothy.github.io/CNN-Explorer/
+
 **An Interactive Educational Platform for Learning Convolutional Neural Networks**
 
 ![CNN Explorer](https://img.shields.io/badge/Machine%20Learning-Educational%20Platform-blue)
 ![TensorFlow.js](https://img.shields.io/badge/TensorFlow.js-Real%20AI-orange)
 ![Mobile Ready](https://img.shields.io/badge/Mobile-Optimized-green)
+
+![CNN Explorer](og-image.jpg)
 
 ## 🎯 Overview
 
@@ -23,7 +27,7 @@ CNN Explorer is a comprehensive, interactive web application that teaches Convol
 
 1. **Clone the repository**
    ```bash
-   git clone [repository-url]
+   git clone https://github.com/ArielSoothy/CNN-Explorer.git
    cd CNN-Explorer
    ```
 

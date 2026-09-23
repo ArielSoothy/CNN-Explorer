@@ -7,11 +7,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>CNN Explorer | Interactive MNIST Analysis</title>
+    <meta name="description" content="An interactive notebook walkthrough of how a convolutional neural network turns handwritten digits into predictions.">
+    <meta property="og:title" content="CNN Explorer | Interactive MNIST Analysis">
+    <meta property="og:description" content="An interactive notebook walkthrough of how a convolutional neural network turns handwritten digits into predictions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arielsoothy.github.io/CNN-Explorer/notebook-interactive.html">
+    <meta property="og:image" content="https://arielsoothy.github.io/CNN-Explorer/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="visualizations.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <style>
         body {
@@ -901,6 +908,11 @@
             font-size: 1.25rem;
             font-weight: 700;
         }
+        .navbar .nav-container .nav-logo a {
+            color: inherit;
+            text-decoration: none;
+            font: inherit;
+        }
 
         .nav-logo-img {
             height: 240px;
@@ -1034,7 +1046,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <!-- Logo removed -->
+                <a href="#">CNN Explorer</a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html#demo" class="nav-link">Try It Live</a></li>
