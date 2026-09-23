@@ -6,18 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no">
     <title>CNN Explorer | Interactive MNIST Classification</title>
+    <meta name="description" content="Learn convolutional neural networks by drawing digits and watching a real TensorFlow.js model predict them in your browser.">
+    <meta property="og:title" content="CNN Explorer | Interactive MNIST Classification">
+    <meta property="og:description" content="Learn convolutional neural networks by drawing digits and watching a real TensorFlow.js model predict them in your browser.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arielsoothy.github.io/CNN-Explorer/">
+    <meta property="og:image" content="https://arielsoothy.github.io/CNN-Explorer/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=1">
     <!-- TensorFlow.js for real machine learning predictions -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <!-- Logo removed -->
+                <a href="#">CNN Explorer</a>
             </div>
             <ul class="nav-menu">
                 <li><a href="#demo" class="nav-link">Try It Live</a></li>
@@ -579,8 +586,39 @@
 
 
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CNN Explorer</h4>
+                    <p>Interactive educational platform teaching Convolutional Neural Networks through hands-on MNIST digit recognition with real TensorFlow.js integration.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Technologies Used</h4>
+                    <ul>
+                        <li>TensorFlow.js</li>
+                        <li>HTML5 Canvas</li>
+                        <li>ES6+ JavaScript</li>
+                        <li>Responsive CSS Grid</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="https://github.com/ArielSoothy" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/ariel-soothy/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ariel Soothy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
     <script src="visualizations.js"></script>
     <script src="ml-prediction.js?v=2025"></script>
     <script src="script.js"></script>

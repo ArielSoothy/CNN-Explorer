@@ -7,11 +7,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>CNN Explorer | Interactive MNIST Analysis</title>
+    <meta name="description" content="An interactive notebook walkthrough of how a convolutional neural network turns handwritten digits into predictions.">
+    <meta property="og:title" content="CNN Explorer | Interactive MNIST Analysis">
+    <meta property="og:description" content="An interactive notebook walkthrough of how a convolutional neural network turns handwritten digits into predictions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arielsoothy.github.io/CNN-Explorer/notebook-interactive.html">
+    <meta property="og:image" content="https://arielsoothy.github.io/CNN-Explorer/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="visualizations.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <style>
         body {
@@ -901,6 +908,11 @@
             font-size: 1.25rem;
             font-weight: 700;
         }
+        .navbar .nav-container .nav-logo a {
+            color: inherit;
+            text-decoration: none;
+            font: inherit;
+        }
 
         .nav-logo-img {
             height: 240px;
@@ -1034,7 +1046,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <!-- Logo removed -->
+                <a href="#">CNN Explorer</a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html#demo" class="nav-link">Try It Live</a></li>
@@ -1055,6 +1067,11 @@
     <div class="notebook-container">
         <!-- Project Header -->
         <div class="project-header">
+            <div style="margin-bottom: 20px;">
+                <a href="index.html" class="btn" style="background: #2563eb; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; transition: background 0.3s ease;">
+                    <i class="fas fa-arrow-left"></i> Back to Main Experience
+                </a>
+            </div>
             <h1>CNN Explorer</h1>
             <div class="subtitle">Interactive Notebook</div>
             <p><strong>Project:</strong> MNIST Digit Recognition | <strong>Framework:</strong> TensorFlow/Keras</p>
@@ -1652,6 +1669,21 @@
     <script>
         // JavaScript for interactive functionality
 
+        // Mobile navigation toggle (this page doesn't load script.js)
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if (!hamburger || !navMenu) return;
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            navMenu.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }));
+        });
+
         function toggleCell(header) {
             const content = header.nextElementSibling;
             const icon = header.querySelector('i');
@@ -1817,5 +1849,36 @@
             });
         });
     </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CNN Explorer</h4>
+                    <p>Interactive educational platform teaching Convolutional Neural Networks through hands-on MNIST digit recognition with real TensorFlow.js integration.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Technologies Used</h4>
+                    <ul>
+                        <li>TensorFlow.js</li>
+                        <li>HTML5 Canvas</li>
+                        <li>ES6+ JavaScript</li>
+                        <li>Responsive CSS Grid</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="https://github.com/ArielSoothy" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/ariel-soothy/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ariel Soothy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
